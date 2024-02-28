@@ -86,15 +86,15 @@ public class Main extends Movement {
 		// this is the code which writes the important things to a file
 		ZigZag.write("The information of the last ZigZag was ");
 		ZigZag.newLine();
-		ZigZag.write("The Length of each section was "+length);
+		ZigZag.write("The Length of each section was "+length+"cm");
 		ZigZag.newLine();
 		ZigZag.write("The Amount of sections in the zigzag was "+sections);
 		ZigZag.newLine();
 		ZigZag.write("The randomly generated speed was "+speed);
 		ZigZag.newLine();
-		ZigZag.write("The Amount of distance travelled was "+Path);
+		ZigZag.write("The Amount of distance travelled was "+Path+"cm");
 		ZigZag.newLine();
-		ZigZag.write("The Straight line path was "+Straight);
+		ZigZag.write("The Straight line path was "+Straight+"cm");
 		ZigZag.newLine();
 		ZigZag.write("The Duartion of the ZigZag is "+ Timer + "seconds");
 
