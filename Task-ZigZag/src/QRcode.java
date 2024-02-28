@@ -13,7 +13,7 @@ public class QRcode
 	
 	static void QRcodeScan() throws InterruptedException, NumberFormatException 
 	{
-		String red = "\u001B[31m";
+		String red = "\u001B[31m";//these change the colour of the text ANSI code
 		String reset = "\u001B[0m";
 		System.out.println("\r\nTaking a capture in 5 seconds..");
 		boolean Scan =false;
@@ -52,8 +52,10 @@ public class QRcode
 		QRcodeValid();
 	}
 	public static void QRcodeValid() throws NumberFormatException, InterruptedException {
-		String green = "\u001B[32m";
+		String green = "\u001B[32m";//these change the colour of the text ANSI code
 		String reset = "\u001B[0m";
+		String yellow = "\u001B[33m";
+		String red = "\u001B[31m";
 		try {
 			String[] parts = decodedText.split(",");// lines 247 to 252 are about getting the decoded string and making it into integers with seperate variables
 			int[] S_L = new int[parts.length];// this splits the strings into two arrays
@@ -65,11 +67,11 @@ public class QRcode
 			// this is where the error handling happens
 			if (((sections<=12) &&(sections % 2 == 0)&& (sections >=2)) &&((length >=15) && (length <=85)))// Succession path
 			{
-				System.out.println(green+ "input acceptable"+ reset);
-				System.out.println("\r\nFirst integer: " +green+ length+reset);
-				System.out.println("Second integer: " +green+ sections+reset);
+				System.out.println(green+ "\r\nInput Accepted!!!"+ reset);
+				System.out.println("The"+ green+" Length "+reset+"of each Section is: " +green+length+"cm"+reset);
+				System.out.println("The Number of"+green+" Sections"+reset+" is: " +green+sections+reset);
 				Thread.sleep(1000);
-				System.out.println("\r\nBeginning ZigZag :) ");
+				System.out.println(yellow+"\r\nBeginning ZigZag :) "+reset);
 				System.out.println("starting in ");
 				try {
 					int LightBlue[]= {0,255,255};//light blue
@@ -86,30 +88,30 @@ public class QRcode
 			} 
 			else if (((sections>12) || (sections % 2 != 0) || (sections <2)) && ((length>85) || (length<15)))// section for if both section and length are not met
 			{
-				System.out.println("\r\nBoth the Length and Section given lie outside of the parameters. ");
+				System.out.println(red+"\r\nBoth the Length and Section given lie outside of the parameters."+reset);
 				waiting();
 				QRcodeScan();
 			}
 			else if ((sections>12) || (sections % 2 != 0) || (sections <2))// section for if parameter for sections are not met
 			{
-				System.out.println("\r\nYour Section input lie outside of the parameters. ");
+				System.out.println(red+"\r\nYour Section input lie outside of the parameters."+reset);
 				waiting();
 				QRcodeScan();
 			}
 			else if ((length>85) ||(length<15))// Section if the parameters for length are not met 
 			{
-				System.out.println("\r\nYour Length input lie outside of the parameters.");
+				System.out.println(red+"\r\nYour Length input lie outside of the parameters."+reset);
 				waiting();
 				QRcodeScan();
 			}
 		}catch(NumberFormatException e)
 		{// This catches any exceptions such as input letters or when the numbers are too big
-			System.out.println("\r\nPlease follow the format as specificied above.");
+			System.out.println(red+"\r\nPlease follow the format as specificied above."+reset);
 			waiting();
 			QRcodeScan();
 		}catch(ArrayIndexOutOfBoundsException e)
 		{// This catches any exceptions such as input letters or when the numbers are too big
-			System.out.println("\r\nPlease follow the format as specificied above.");
+			System.out.println(red+"\r\nPlease follow the format as specificied above."+reset);
 			waiting();
 			QRcodeScan();
 		}
@@ -119,6 +121,8 @@ public class QRcode
 		String black = "\u001B[30m";
 		String reset = "\u001B[0m";// changing the text colour
 		String cyanB = "\u001B[46m";
+		String purple = "\u001B[35m";
+		String blue = "\u001B[34m";
 		input="";// this whole method is the period if the program is waiting for a button to be pressed
 		System.out.println("\r\nPress the "+cyanB+black+"'A'"+reset+" Button to start scanning. ");
 		System.out.println("Press the "+cyanB+black+"'X'"+reset+" Button to end the program. ");
@@ -130,7 +134,7 @@ public class QRcode
 				swiftBot.disableAllButtons();
 			});   
 			swiftBot.enableButton(Button.X, () -> {// if X is pressed then the program terminates
-				System.out.println("\r\nTerminating Program. Bye Bye :( ");
+				System.out.println(blue+"\r\nTerminating "+purple+"Program. "+blue+"Bye Bye "+purple+":( "+reset);
 				swiftBot.disableButtonLights();
 				swiftBot.disableAllButtons();
 				swiftBot.disableUnderlights();

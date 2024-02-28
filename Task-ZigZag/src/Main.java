@@ -72,7 +72,7 @@ public class Main extends Movement {
 
 	public static void DisplayFile(long End,long Start) throws IOException 
 	{// this methods writes all the necessary information required in the requirement specification to a file
-		String yellow = "\u001B[33m";
+		String yellow = "\u001B[33m";//these change the colour of the text ANSI code
 		String reset = "\u001B[0m";
 		
 		double Timer =  (double) (End - Start)/1000; 
@@ -150,7 +150,7 @@ public class Main extends Movement {
 
 				try (BufferedWriter writer = new BufferedWriter(new FileWriter("/home/pi/Documents/Journeys.txt"))) {
 					writer.write(String.valueOf(Journeys));// the above line is where the number for the number of journeys is stored
-					System.out.println("\r\nJourneys has been reset");
+					System.out.println(yellow+"\r\nJourneys has been reset"+reset);
 				} 
 				catch (IOException e)
 				{
