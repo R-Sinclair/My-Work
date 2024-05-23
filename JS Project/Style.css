@@ -1,0 +1,76 @@
+
+body{
+margin: 0;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+}
+#Calculator
+{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: lightgrey;
+    max-width: 500px;
+    overflow: hidden;
+    border-radius: 25px;
+}
+#buttons{
+    display: grid;
+    grid-template-columns: repeat(4 , 1fr);
+    gap: 10px;
+    padding: 25px;
+}
+
+button
+{
+    width: 100px;
+    height: 100px ;
+    border-radius: 50px;
+    border: none;
+    background-color: grey;
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Segoe UI', sTahoma, Geneva, Verdana, sans-serif;
+}
+
+button:hover{
+    background-color:lightgray;
+}
+button:active
+{
+    background-color: tan;
+}
+.Operator-BTN
+{
+    background-color: orange;
+}
+.Operator-BTN:hover{
+    background-color: lightsalmon;
+}
+.Operator-BTN:active{background-color: tan;}
+
+#display
+{
+width: 90%;
+padding: 30px;
+text-align: right;
+border: 4cm;
+font-size: 5rem;
+color: black;
+background-color: darkgrey;
+}
+
+input
+{
+    width: 100px;
+    height: 100px;
+
+}
+h1
+{
+    font-size: large;
+    justify-self: center;
+    align-self: baseline ;
+}
