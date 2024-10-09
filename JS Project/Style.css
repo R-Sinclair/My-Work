@@ -5,6 +5,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 height: 100vh;
+background-color: black;
 }
 #Calculator
 {
@@ -72,5 +73,7 @@ h1
 {
     font-size: large;
     justify-self: center;
-    align-self: baseline ;
+   color: white;
+   position: fixed;
+  top: 0%;
 }
