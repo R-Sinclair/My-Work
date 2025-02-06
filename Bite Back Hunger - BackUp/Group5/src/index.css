@@ -1,0 +1,62 @@
+body {
+  font-family: Arial, sans-serif;
+  background: url('https://source.unsplash.com/1600x900/?food,poverty') no-repeat center center/cover;
+  color: rgb(231, 219, 219);
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(144, 238, 144, 0.9);
+  padding: 10px 20px;
+}
+
+.navbar a {
+  color: black;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background: #ff9800;
+}
+
+.search-bar {
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgba(144, 238, 144, 0.9);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background: #ff9800;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+

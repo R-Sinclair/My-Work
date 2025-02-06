@@ -1,4 +1,5 @@
-import React, { useRef } from "react";
+import React, { useRef } from "vite";
+import { Outlet } from 'react-router-dom'
 
 function RegistrationForm() {
     const nameRef = useRef();
@@ -58,6 +59,8 @@ function RegistrationForm() {
                 </div>
                 <button type="submit" style={styles.button}>Register</button>
             </form>
+            <Outlet />
+
         </div>
     );
 }
