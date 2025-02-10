@@ -1,33 +1,20 @@
 import React from 'react';
 import './Home.css'
-import { useOutletContext } from "react-router-dom";
+import donateFoodMap from './donate-food-map.jpg';
+import shelters from './shelters.jpg';
+import foodInsecurity from './food-insecurity.webp';
+import foodBank from './food-bank.jpg';
+import twitterIcon from './twitter.png';
+import facebookIcon from './facebook.jpg';
+import instaIcon from './insta.jpg';
+import linkedinIcon from './linkedin.webp';
+import Layout from '../Components/Layout';
 
 
 function Home () {
-  const [token, setToken] = useOutletContext();
   return (
     <div>
-      <div className="navbar">
-        <div className="auth-buttons">
-          <a href="Components/LoginPage.jsx" className="auth-button" style={{ background: 'darkgreen', color: 'white', padding: '10px 15px', borderRadius: '5px', textDecoration: 'none' }}>
-            Login
-          </a>
-          <a href="Components/RegistrationForm.jsx" className="auth-button" style={{ background: 'white', color: 'black', border: '2px solid black', padding: '10px 15px', borderRadius: '5px', textDecoration: 'none' }}>
-            Sign Up
-          </a>
-        </div>
-        <a href="#">Home</a>
-        <div className="dropdown">
-          <a href="#" className="dropbtn">Support Us</a>
-          <div className="dropdown-content">
-            <a href="#donate-food">Donate Food</a>
-            <a href="#donate-money">Donate Money</a>
-          </div>
-        </div>
-        <a href="#news">News</a>
-        <a href="#find-shelters">Find Shelters</a>
-        <input type="text" className="search-bar" placeholder="Search..." />
-      </div>
+  <Layout/>
     
       <div className="container">
         <h1>Help Fight Food Insecurity</h1>
@@ -42,7 +29,7 @@ function Home () {
         </a>
         <div className="map-container">
           <a href="https://www.google.co.uk/maps/search/food+shelters+london/@51.5404774,-0.2576094,11z?entry=ttu&g_ep=EgoyMDI1MDEyOC4wIKXMDSoASAFQAw%3D%3D" target="_blank">
-            <img src="Home/donate-food-map.jpg" alt="Food Bank Map" />
+            <img src={donateFoodMap} alt="Food Bank Map" />
           </a>
         </div>
       </div>
@@ -68,7 +55,7 @@ function Home () {
         </a>
         <div className="map-container">
           <a href="https://www.google.com/maps/search/homeless+shelters+near+me/" target="_blank">
-            <img src="Home/shelters.jpg" alt="Shelter Map" />
+            <img src={shelters} alt="Shelter Map" />
           </a>
         </div>
       </div>
@@ -78,14 +65,14 @@ function Home () {
         <div className="news-container">
           <div className="news-item">
             <a href="https://geographical.co.uk/news/where-is-food-insecurity-worst-in-the-world" target="_blank">
-              <img src="Home/food-insecurity.webp" alt="News Image" />
+              <img src={foodInsecurity} alt="News Image" />
             </a>
             <a href="https://geographical.co.uk/news/where-is-food-insecurity-worst-in-the-world" target="_blank">Latest on Food Insecurity</a>
             <p>Stay updated on how food insecurity is impacting communities worldwide.</p>
           </div>
           <div className="news-item">
             <a href="https://www.citizensadvice.org.uk/debt-and-money/food-bank/using-a-food-bank/#:~:text=The%20food%20bank%20will%20give,toiletries%2C%20like%20toothpaste%20or%20deodorant." target="_blank">
-              <img src="Home/food-bank.jpg" alt="News Image" />
+              <img src={foodBank} alt="News Image" />
             </a>
             <a href="https://www.citizensadvice.org.uk/debt-and-money/food-bank/using-a-food-bank/#:~:text=The%20food%20bank%20will%20give,toiletries%2C%20like%20toothpaste%20or%20deodorant." target="_blank">Food Banks and Support</a>
             <p>Learn about how food banks are supporting individuals and families in need.</p>
@@ -109,10 +96,10 @@ function Home () {
         </div>
         <h3>Follow Us:</h3>
         <div className="social-links">
-          <a href="https://twitter.com" target="_blank"><img src="Home/twitter.png" alt="Twitter" width="30px" height="30px" /></a>
-          <a href="https://facebook.com" target="_blank"><img src="Home/facebook.jpg" alt="Facebook" width="30px" height="30px" /></a>
-          <a href="https://instagram.com" target="_blank"><img src="Home/insta.jpg" alt="Instagram" width="30px" height="30px" /></a>
-          <a href="https://linkedin.com" target="_blank"><img src="Home/linkedin.webp" alt="LinkedIn" width="30px" height="30px" /></a>
+          <a href="https://twitter.com" target="_blank"><img src={twitterIcon} alt="Twitter" width="30px" height="30px" /></a>
+          <a href="https://facebook.com" target="_blank"><img src={facebookIcon} alt="Facebook" width="30px" height="30px" /></a>
+          <a href="https://instagram.com" target="_blank"><img src={instaIcon} alt="Instagram" width="30px" height="30px" /></a>
+          <a href="https://linkedin.com" target="_blank"><img src={linkedinIcon} alt="LinkedIn" width="30px" height="30px" /></a>
         </div>
       </div>
     </div>

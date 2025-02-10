@@ -1,7 +1,9 @@
 
-import './App.css'
-import Layout from './Components/Layout'
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './Home/Home';
+import LoginPage from './Components/LoginPage';
+import RegistrationForm from './Components/RegistrationForm';
 
 
 
@@ -12,8 +14,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
       <BrowserRouter>
         <Routes>
         
-          <Route index element={<Layout/>}></Route>
-          
+          <Route index element={<Home/>}></Route>
+          <Route path={'/Home'} element={<Home/>}></Route>
+          <Route path={'/Login'} element={<LoginPage/>}></Route>
+          <Route path={'/Sign_Up'} element={<RegistrationForm/>}></Route>
+          <Route path={'/Home#donate-money'} element={<Home/>}></Route>
+         
         </Routes>
       </BrowserRouter>
     )

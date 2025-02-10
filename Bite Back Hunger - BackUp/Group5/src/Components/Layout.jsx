@@ -1,27 +1,102 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
+export default function Layout() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-export default function Layout (){
+  const handleMouseEnter = () => {
+    setIsDropdownOpen(true);
+  };
 
-return (  
-  
-    <div className="navbar">
-      <div className="auth-buttons">
-        <a href="Components/LoginPage.jsx" className="auth-button" style={{ background: 'darkgreen', color: 'white', padding: '10px 15px', borderRadius: '5px', textDecoration: 'none' }}>
-          Login
-        </a>
-        <a href="Components/RegistrationForm.jsx" className="auth-button" style={{ background: 'white', color: 'black', border: '2px solid black', padding: '10px 15px', borderRadius: '5px', textDecoration: 'none' }}>
-          Sign Up
-        </a>
+  const handleMouseLeave = () => {
+    setIsDropdownOpen(false);
+  };
+
+  return (
+    <div style={styles.navbar}>
+      <div style={styles.authButtons}>
+        <Link to='/Sign_Up' style={styles.authButton}>Sign Up</Link>
+        <Link to='/Login' style={styles.authButton}>Login</Link>
       </div>
-      <a href="#">Home</a>
-      <div className="dropdown">
-        <a href="#" className="dropbtn">Support Us</a>
-        <div className="dropdown-content">
-          <a href="#donate-food">Donate Food</a>
-          <a href="#donate-money">Donate Money</a>
-        </div>
+      <Link to='/Home' style={styles.navLink}>Home</Link>
+      <div 
+        style={styles.dropdown}
+        onMouseEnter={handleMouseEnter} 
+        onMouseLeave={handleMouseLeave} 
+      >
+        <a href="#" style={styles.dropbtn}>Support Us</a>
+        
+        {isDropdownOpen && (
+          <div style={styles.dropdownContent}>
+            <a href="#donate-food" style={styles.dropdownItem}>Donate Food</a>
+            <a href="#donate-money" style={styles.dropdownItem}>Donate Money</a>
+          </div>
+        )}
       </div>
-      <a href="#news">News</a>
-      <a href="#find-shelters">Find Shelters</a>
-      <input type="text" className="search-bar" placeholder="Search..." />
-    </div>)}
+      <a href="#news" style={styles.navLink}>News</a>
+      <a href="#find-shelters" style={styles.navLink}>Find Shelters</a>
+      <input type="text" style={styles.searchBar} placeholder="Search..." />
+    </div>
+  );
+}
+
+const styles = {
+  navbar: {
+    display: "flex",
+    flexWrap: "wrap", 
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "10px 20px",
+    backgroundColor: "lightgreen",
+  },
+  authButtons: {
+    display: "flex",
+    gap: "10px",
+  },
+  authButton: {
+    backgroundColor: "darkgreen",
+    color: "white",
+    padding: "10px 15px",
+    borderRadius: "10px",
+    textDecoration: "none",
+  },
+  dropdown: {
+    position: "relative",
+    display: "inline-block",
+  },
+  dropbtn: {
+
+    color: "black",
+    padding: "10px 15px",
+    borderRadius: "10px",
+    textDecoration: "none",
+    cursor: "pointer",
+  },
+  dropdownContent: {
+    position: "absolute",
+    backgroundColor: "white",
+    minWidth: "160px",
+    boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.2)",
+    zIndex: "1",
+    display: "block", 
+  },
+  dropdownItem: {
+    color: "black",
+    padding: "12px 16px",
+    textDecoration: "none",
+    display: "block",
+  },
+  navLink: {
+    padding: "10px 15px",
+    textDecoration: "none",
+    color: "black", 
+    fontSize: "16px",
+  },
+  searchBar: {
+    padding: "8px",
+    width: "200px",
+    maxWidth: "300px",
+    border: "1px solid #ccc",
+    borderRadius: "5px",
+  },
+};
