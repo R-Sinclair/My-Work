@@ -2,37 +2,31 @@ package DataTransferObject;
 
 import Tables.UserType;
 
-public class DataTransfer {
-	String lastName;
+public class DTORestaurants {
+	String Name;
 	String email;
 	String password;
 	UserType userType;
-	String firstName;
+
 
 	
-	public DataTransfer(String firstName,String lastName, String email, String password, Boolean Business, Boolean User) {
+	public DTORestaurants(String Name, String email, String password, Boolean Business, Boolean User) {
 		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
+		
+		this.Name = Name;
 		this.email = email;
 		this.password = password;
 		this.userType = convertType(Business,User);
 	}
 	
-	public String getfirstName() {
-		return firstName;
-	}
-
-	public void setfirstName(String firstName) {
-		this.firstName = firstName;
-	}
 	
-	public String getlastName() {
-		return lastName;
+	
+	public String getName() {
+		return Name;
 	}
 
-	public void setlastName(String lastName) {
-		this.lastName = lastName;
+	public void setName(String Name) {
+		this.Name = Name;
 	}
 
 	public String getEmail() {

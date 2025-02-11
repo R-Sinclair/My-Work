@@ -30,7 +30,7 @@ import jakarta.persistence.TemporalType;
 		private Long id;
 		
 		@Column
-		private String Name;
+		private String name;
 		
 		@NotBlank
 		@Column(unique=true)
@@ -62,9 +62,9 @@ import jakarta.persistence.TemporalType;
 		}
 			
 		 
-		 public RestaurantTable(String Name, String email, String password, UserType userType) {
+		 public RestaurantTable(String name, String email, String password, UserType userType) {
 			super();
-			this.Name = Name;
+			this.name = name;
 			this.email = email;
 			this.password = password;
 			this.userType = userType;
@@ -91,12 +91,12 @@ import jakarta.persistence.TemporalType;
 	
 		
 		public String getName() {
-			return Name;
+			return name;
 		}
 
 
-		public void setName(String lastName) {
-			this.Name = lastName;
+		public void setName(String name) {
+			this.name = name;
 		}
 
 
@@ -123,7 +123,7 @@ import jakarta.persistence.TemporalType;
 
 		@Override
 		public String toString() {
-			return "Restaurant User [id=" + id + ", name=" + Name +", email=" + email + ", password=" + password + ", userType="
+			return "Restaurant User [id=" + id + ", name=" + name +", email=" + email + ", password=" + password + ", userType="
 					+ userType + "]";
 		}
 		

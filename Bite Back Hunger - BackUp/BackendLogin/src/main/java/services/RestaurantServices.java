@@ -9,16 +9,19 @@ import org.springframework.stereotype.Service;
 import Tables.RestaurantTable;
 import exceptions.ResourceNotFoundException;
 import repository.RestaurantRepo;
-import repository.UserRepo;
+
 @Service
 public class RestaurantServices {
 
 	@Autowired
    public RestaurantRepo restaurantRepo;
 	
+
+   
 	public RestaurantServices() {
 		super();
 	}
+	
 	
 
 	public List<RestaurantTable> getUsers() {

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import DataTransferObject.DataTransfer;
+import DataTransferObject.DTORestaurants;
 import Tables.RestaurantTable;
 import Tables.UserType;
 import services.RestaurantServices;
@@ -35,10 +35,10 @@ public class RestaurantController {
 
     //Post a User
     @PostMapping("/AddUser")
-    public ResponseEntity<Optional<RestaurantTable>> addUser(@RequestBody DataTransfer data) {
+    public ResponseEntity<Optional<RestaurantTable>> addUser(@RequestBody DTORestaurants data) {
     	
     	if (
-    			data.getName()==null ||
+    		data.getName()==null ||
     		data.getEmail()==null ||
     		data.getPassword()==null ||
     		data.getUserType() == UserType.NONE) {
@@ -54,8 +54,8 @@ public class RestaurantController {
     
     //Get User by ID
     @GetMapping("/user/{id}")
-    public ResponseEntity<RestaurantTable>getUserById(@PathVariable(value = "id") long Id) {
-    	Optional<RestaurantTable> user1 = restaurantService.findByID(Id);
+    public ResponseEntity<RestaurantTable>getUserById(@PathVariable(value = "id") long id) {
+    	Optional<RestaurantTable> user1 = restaurantService.findByID(id);
 		if (user1.isPresent())
 		{
 			return new ResponseEntity<>(user1.get(), HttpStatus.OK);
@@ -67,8 +67,8 @@ public class RestaurantController {
     
     //Delete a User by ID
     @DeleteMapping("/user/{id}")
-    public ResponseEntity<RestaurantTable>  deleteUser(@PathVariable(value = "id") long Id) {
-    	restaurantService.deleteUser(Id);
+    public ResponseEntity<RestaurantTable>  deleteUser(@PathVariable(value = "id") long id) {
+    	restaurantService.deleteUser(id);
         String Deleted = "User Deleted"; 
         return new ResponseEntity<>( HttpStatus.OK);
     }
@@ -93,7 +93,6 @@ public class RestaurantController {
 			RestaurantTable UpdatedUser = OldUser.get();
 			UpdatedUser.setEmail(NewUser.getEmail());
 			UpdatedUser.setName(NewUser.getName());
-			UpdatedUser.setId(NewUser.getId());
 			UpdatedUser.setPassword(NewUser.getPassword());
 			UpdatedUser.setUserType(NewUser.getUserType());
 			

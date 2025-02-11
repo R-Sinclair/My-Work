@@ -21,7 +21,7 @@ import Tables.UserType;
 import services.UserService;
 
 @RestController
-@RequestMapping("/5")
+@RequestMapping("/NormalUsers")
 public class UserController {
     @Autowired
 	UserService userService;
@@ -54,8 +54,8 @@ public class UserController {
     
     //Get User by ID
     @GetMapping("/user/{id}")
-    public ResponseEntity<UserTable>getUserById(@PathVariable(value = "id") long Id) {
-    	Optional<UserTable> user1 = userService.findByID(Id);
+    public ResponseEntity<UserTable>getUserById(@PathVariable(value = "id") long id) {
+    	Optional<UserTable> user1 = userService.findByID(id);
 		if (user1.isPresent())
 		{
 			return new ResponseEntity<>(user1.get(), HttpStatus.OK);
@@ -67,8 +67,8 @@ public class UserController {
     
     //Delete a User by ID
     @DeleteMapping("/user/{id}")
-    public ResponseEntity<UserTable>  deleteUser(@PathVariable(value = "id") long Id) {
-        userService.deleteUser(Id);
+    public ResponseEntity<UserTable>  deleteUser(@PathVariable(value = "id") long id) {
+        userService.deleteUser(id);
         String Deleted = "User Deleted"; 
         return new ResponseEntity<>( HttpStatus.OK);
     }
