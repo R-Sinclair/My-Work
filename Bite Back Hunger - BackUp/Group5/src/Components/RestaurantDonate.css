@@ -1,0 +1,91 @@
+/* RestaurantDonate.css */
+
+/* Wrapper styles */
+.donate-container {
+    background-color: #ecfdf5; /* Tailwind bg-green-50 */
+    min-height: 100vh;
+    padding: 2rem; /* Tailwind p-8 */
+}
+
+/* Form container styles */
+.donate-form-container {
+    max-width: 32rem; /* Tailwind max-w-lg */
+    margin: 0 auto;
+    background-color: white;
+    padding: 1.5rem; /* Tailwind p-6 */
+    border-radius: 0.75rem; /* Tailwind rounded-lg */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Tailwind shadow-md */
+}
+
+/* Spacing between form fields */
+.donate-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Tailwind space-y-6 */
+}
+
+/* Checkbox label and input styles */
+.donateCheckbox {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* Tailwind space-x-3 */
+}
+
+.donate-checkbox-input {
+    height: 1.25rem; /* Tailwind h-5 */
+    width: 1.25rem; /* Tailwind w-5 */
+    color: #10b981; /* Tailwind text-green-500 */
+    border-color: #d1d5db; /* Tailwind border-gray-300 */
+    border-radius: 0.25rem; /* Tailwind rounded */
+    transition: all 0.2s ease-in-out;
+}
+
+.donate-checkbox-input:focus {
+    ring: 2px solid #10b981; /* Tailwind focus:ring-green-500 */
+}
+
+.donate-checkbox label {
+    font-size: 1rem; /* Tailwind text-lg */
+    color: #374151; /* Tailwind text-gray-700 */
+}
+
+/* Location label and input styles */
+.donate-location-label {
+    font-size: 0.875rem; /* Tailwind text-sm */
+    font-weight: 600; /* Tailwind font-semibold */
+    color: #374151; /* Tailwind text-gray-700 */
+    margin-bottom: 0.5rem; /* Tailwind mb-2 */
+}
+
+.donate-location-input {
+    width: 100%;
+    padding: 0.75rem; /* Tailwind p-3 */
+    border: 1px solid #d1d5db; /* Tailwind border-gray-300 */
+    border-radius: 0.375rem; /* Tailwind rounded-md */
+    transition: all 0.2s ease-in-out;
+}
+
+.donate-location-input:focus {
+    outline: none;
+    border-color: #10b981; /* Tailwind focus:ring-green-500 */
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3); /* Tailwind focus:ring-2 focus:ring-green-500 */
+}
+
+/* Button styles */
+.donate-button {
+    width: 100%;
+    background-color: #10b981; /* Tailwind bg-green-500 */
+    color: white;
+    padding: 0.75rem; /* Tailwind p-3 */
+    border-radius: 0.375rem; /* Tailwind rounded-md */
+    transition: background-color 0.3s ease-in-out;
+}
+
+.donate-button:hover {
+    background-color: #059669; /* Tailwind hover:bg-green-600 */
+}
+
+.donate-button:disabled {
+    background-color: #d1d5db; /* Tailwind bg-gray-300 */
+    cursor: not-allowed;
+}

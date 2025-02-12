@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Home/Home';
 import LoginPage from './Components/LoginPage';
 import RegistrationForm from './Components/RegistrationForm';
+import RestaurantDonate from './Components/RestaurantDonate';
+
 
 
 
@@ -18,7 +20,7 @@ import RegistrationForm from './Components/RegistrationForm';
           <Route path={'/Home'} element={<Home/>}></Route>
           <Route path={'/Login'} element={<LoginPage/>}></Route>
           <Route path={'/Sign_Up'} element={<RegistrationForm/>}></Route>
-          <Route path={'/Home#donate-money'} element={<Home/>}></Route>
+          <Route path={'/RestaurantDonate'} element={<RestaurantDonate/>}></Route>
          
         </Routes>
       </BrowserRouter>

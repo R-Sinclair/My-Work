@@ -84,6 +84,18 @@ public class RestaurantController {
 			}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+	@GetMapping("/user/findById/{email}")
+    public ResponseEntity<RestaurantTable> getUserIdByEmail(@PathVariable String email) {
+    	Optional<RestaurantTable> user1 = (restaurantService.findUserIDByEmail(email));
+		if (user1.isPresent())
+		{
+			return new ResponseEntity<>(user1.get(), HttpStatus.OK);
+
+			}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @PutMapping ("/UpdateUserById/{id}")
 	public ResponseEntity<RestaurantTable> UpdateUserById (@PathVariable (value ="id") Long id, @RequestBody RestaurantTable NewUser) 
 	{
