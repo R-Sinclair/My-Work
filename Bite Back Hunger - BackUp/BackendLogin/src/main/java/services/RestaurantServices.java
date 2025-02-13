@@ -36,10 +36,7 @@ public class RestaurantServices {
 		 return restaurantRepo.findById(id);
 	}
 	
-		
-	public Optional<RestaurantTable> findUserIDByEmail(String email) {
-		return restaurantRepo.findIdByEmail(email);
-   }
+
 	public void deleteUser(Long id) {
 		RestaurantTable user = restaurantRepo.findById(id)
 				  .orElseThrow(() -> new ResourceNotFoundException("Restaurant", "id", id));

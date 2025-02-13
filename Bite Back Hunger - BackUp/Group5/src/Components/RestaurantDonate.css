@@ -1,13 +1,11 @@
-/* RestaurantDonate.css */
 
-/* Wrapper styles */
 .donate-container {
     background-color: #ecfdf5; /* Tailwind bg-green-50 */
     min-height: 100vh;
     padding: 2rem; /* Tailwind p-8 */
 }
 
-/* Form container styles */
+
 .donate-form-container {
     max-width: 32rem; /* Tailwind max-w-lg */
     margin: 0 auto;

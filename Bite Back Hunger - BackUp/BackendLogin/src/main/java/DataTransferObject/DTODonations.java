@@ -3,7 +3,7 @@ package DataTransferObject;
 
 public class DTODonations {
 
-	public Long DonationId;
+	public int DonationId;
 	public Long RestaurantId;
 	public int Code;
 	public String Location;
@@ -11,7 +11,7 @@ public class DTODonations {
 
 
 	
-	public DTODonations(Long DonationId, Long RestaurantId, int Code, String Location, Long UserId) {
+	public DTODonations(int DonationId, Long RestaurantId, int Code, String Location, Long UserId) {
 		super();
 		this.DonationId = DonationId;
 		this.RestaurantId = RestaurantId;
@@ -29,11 +29,11 @@ public class DTODonations {
 		this.UserId = UserId;
 	}
 	
-	public Long getDonationId() {
+	public int getDonationId() {
 		return DonationId;
 	}
 
-	public void setDonationId(Long DonationId) {
+	public void setDonationId(int DonationId) {
 		this.DonationId = DonationId;
 	}
 

@@ -30,10 +30,14 @@ public class DonationServices {
 		donationRepo.save(newDonation);
 	}
 	
-	public Optional<Donation> findById(Long donationId) {
-		 return donationRepo.findById(donationId);
+	public Optional<Donation> findByDonationId(int donationId) {
+		 return donationRepo.findByDonationId(donationId);
 	}
 	
+	public Optional<Donation> findById(Long id) {
+		return donationRepo.findById(id);
+   }
+   
 	public Optional<Donation> findByRestaurantId(Long restaurantId) {
 		 return donationRepo.findByRestaurantId(restaurantId);
 	}
@@ -42,10 +46,10 @@ public class DonationServices {
 		 return donationRepo.findByUserId(userId);
 	}
 	
-	public void deleteDonation(Long donationId) {
-		Donation id = donationRepo.findById(donationId)
-				  .orElseThrow(() -> new ResourceNotFoundException("Donation", "id", donationId));
-		donationRepo.delete(id);
+	public void deleteDonation(Long id) {
+		Donation donation = donationRepo.findById(id)
+				  .orElseThrow(() -> new ResourceNotFoundException("Donation", "id", id));
+		donationRepo.delete(donation);
 	}
 
 	public Donation save(Donation updatedDonation) {

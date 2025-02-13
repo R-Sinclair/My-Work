@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import DataTransferObject.DTORestaurants;
@@ -53,7 +52,7 @@ public class RestaurantController {
     }
     
     //Get User by ID
-    @GetMapping("/user/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<RestaurantTable>getUserById(@PathVariable(value = "id") long id) {
     	Optional<RestaurantTable> user1 = restaurantService.findByID(id);
 		if (user1.isPresent())
@@ -66,7 +65,7 @@ public class RestaurantController {
     
     
     //Delete a User by ID
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/id/{id}")
     public ResponseEntity<RestaurantTable>  deleteUser(@PathVariable(value = "id") long id) {
     	restaurantService.deleteUser(id);
         String Deleted = "User Deleted"; 
@@ -74,20 +73,9 @@ public class RestaurantController {
     }
     
     //Get User by Email
-    @GetMapping("/user/findByEmail")
-    public ResponseEntity<RestaurantTable> getUserByEmail(@RequestParam String email) {
+    @GetMapping("/email/{email}")
+    public ResponseEntity<RestaurantTable> getUserByEmail(@PathVariable(value = "email") String email) {
     	Optional<RestaurantTable> user1 = Optional.ofNullable(restaurantService.findByEmail(email));
-		if (user1.isPresent())
-		{
-			return new ResponseEntity<>(user1.get(), HttpStatus.OK);
-
-			}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-	@GetMapping("/user/findById/{email}")
-    public ResponseEntity<RestaurantTable> getUserIdByEmail(@PathVariable String email) {
-    	Optional<RestaurantTable> user1 = (restaurantService.findUserIDByEmail(email));
 		if (user1.isPresent())
 		{
 			return new ResponseEntity<>(user1.get(), HttpStatus.OK);

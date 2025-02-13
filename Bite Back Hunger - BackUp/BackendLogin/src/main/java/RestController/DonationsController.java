@@ -36,10 +36,11 @@ public class DonationsController {
     @PostMapping("/AddDonations")
     public ResponseEntity<Optional<Donation>> addDonations(@RequestBody DTODonations data) {
     	
-    	if (data.getDonationId()==null ||
+    	if (data.getDonationId()==0 ||
     			data.getRestaurantId()==null ||
     		data.getCode()==0 ||
-    		data.getLocation()==null ) {
+                "".equals(data.getLocation()) 
+			) {
             return new ResponseEntity<>(Optional.ofNullable(null), HttpStatus.BAD_REQUEST);
         }
     	
@@ -66,7 +67,7 @@ public class DonationsController {
    
     @DeleteMapping("/Donation/{id}")
     public ResponseEntity<Donation>  deleteDonation(@RequestParam Long donationId) {
-        donationServices.deleteDonation(donationId);;
+        donationServices.deleteDonation(donationId);
         String Deleted = "User Deleted"; 
         return new ResponseEntity<>( HttpStatus.OK);
     }

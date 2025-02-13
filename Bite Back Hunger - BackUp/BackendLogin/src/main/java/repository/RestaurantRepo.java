@@ -11,5 +11,5 @@ import Tables.RestaurantTable;
 public interface RestaurantRepo extends JpaRepository<RestaurantTable,Long>{
 	RestaurantTable findByEmail(String email);
 	Optional<RestaurantTable> findById(Long id);
-Optional<RestaurantTable> findIdByEmail(String email);
+
 }

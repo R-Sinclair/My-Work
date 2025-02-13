@@ -29,7 +29,7 @@ public class Donation implements Serializable {
 	private Long id;
 	
 	@Column(name = "Donation_id")
-	public Long donationId;
+	public int donationId;
 	
 	@Column(name = "Restaurant_id")
 	public Long restaurantId;
@@ -57,10 +57,14 @@ public class Donation implements Serializable {
 	
 	 
 
+	public Donation() {
+		super();
+		
+}
 
 		
 	 
-	 public Donation( Long restaurantId, Long donationId, int code, String location, Long userId) {
+	 public Donation( int donationId, Long restaurantId, int code, String location, Long userId) {
 		super();
 		this.donationId =  donationId;
 		this.restaurantId=  restaurantId;
@@ -91,11 +95,11 @@ public class Donation implements Serializable {
     }
 
 	
-	public Long getDonationID() {
+	public int getDonationID() {
 		return donationId;
 	}
 
-	public void setDonationId(Long donationId) {
+	public void setDonationId(int donationId) {
 		this.donationId = donationId;
 	}
 

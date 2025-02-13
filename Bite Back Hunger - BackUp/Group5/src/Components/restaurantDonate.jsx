@@ -1,93 +1,96 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import RestaurantLayout from './RestaurantLayout';
 import './RestaurantDonate.css';  
-import axios from "axios";
+import axios from 'axios';
 
 function RestaurantDonate() {
     const donateRef = useRef();
     const locationRef = useRef();
     const emailRef = useRef();
-    const [isChecked, setIsChecked] = useState(false);  // State to manage checkbox status
-    const [isSubmitted, setIsSubmitted] = useState(false);  // State to track if form is submitted
-    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    const empty = "";
+    const [isChecked, setIsChecked] = useState(false);  
+    const [isSubmitted, setIsSubmitted] = useState(false);  
+    const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const [userId, setUserId] = useState(false);
 
     const [formData, setFormData] = useState({
-        Donate:false,
-        email:'',
-        location:'',
-        
-    })
-  
+                    email: '',
+                    location: ''
+            
+    });
+
 
     const navigate = useNavigate();  
+    
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         setIsSubmitted(true); 
+        const email = emailRef.current.value
 
         if (!donateRef.current.checked) {
-            alert("You must click here to donate");
+            alert("You must click here to donat");
             return;
         }
 
-        if (locationRef.current.value === empty) {
+        if (formData.location === '') {
             alert("Please add a location");
             return;
         }
-        if (emailRef.current.length == 0|| !formData.email.match(mailformat)) {
+
+        if (email.length === 0 || !email.match(mailformat)) {
             alert("Please add an email and make sure it's correct");
             return;
         }
 
- 
-        
 
-        try {
-            const response = await axios.get('http://localhost:8080/h2-console/Restaurant/user/id{email}');
-            const restaurantData = response.data; // assuming the response contains the restaurant data
-            const restaurantId = restaurantData.id;  // Use the correct field for the restaurant ID
+            try {
+              
+                const response = await axios.get(`http://localhost:8080/Restaurant/email/${email}`);
+                const restaurantId = response.data
+                const id = restaurantId.id
 
-            
-            const donationId = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
-            const code = Math.floor(Math.random() * (99 - 10 + 1)) + 10;
+                setUserId(id);
+               
 
-            const dataToSend = {
-                restaurantId,
-                donationId,
-                code,
-                location: location,
-                userId: null, 
-            };
+                const DonationId = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+                const Code = Math.floor(Math.random() * (99 - 10 + 1)) + 10;
 
-            const responsePost = await axios.post('http://localhost:8080/h2-console/Donations/AddDonations', dataToSend);
-            
-            if (responsePost.status === 201) {
-                alert("Registered successfully.");
+                const dataToSend = {
+                    donationId: DonationId,
+                    restaurantId: id,
+                    code: Code,
+                    location: locationRef.current.value,
+                    userId: null, 
+                };
+
+                const responsePost = await axios.post('http://localhost:8080/Donations/AddDonations', dataToSend);
                 
-                
-                navigate('/Home');  
+                if (responsePost.status === 201) {
+                    alert("Registered successfully.");
+                    navigate('/Home');
+                }
+
+               
+            } catch (error) {
+                console.error(error);
+                alert("There was an error with the donation process.");
+                window.location.reload();
+                       
+            
             }
-            setFormData(() =>({
-                Donate:false,
-                email:'',
-                location:'',
-            }))
+        };
+    
 
-        } catch (error) {
-            console.error(error);
-            alert("There was an error with the donation process.");
-        }
-    };
+      
 
     const handleCheckboxChange = () => {
-        setIsChecked(donateRef.current.checked);  // Update state based on checkbox status
+        setIsChecked(donateRef.current.checked);  
     };
 
     return (
         <div>
-            <RestaurantLayout />
+            <RestaurantLayout/>
             <div className="donate-container">
                 <div className="donate-form-container">
                     <form onSubmit={handleSubmit} className="donate-form">
@@ -95,28 +98,28 @@ function RestaurantDonate() {
                             <input
                                 type="checkbox"
                                 ref={donateRef}
-                                name = "donate"
+                                name="donate"
                                 className="donate-checkbox-input"
-                                onChange={handleCheckboxChange} // Handle checkbox change
+                                onChange={handleCheckboxChange}
                             />
                             <label className="text-lg text-gray-700">
-                                <a target="_blank" rel="noopener noreferrer">
-                                    Do You want to donate
-                                </a>
+                                Do You want to donate
                             </label>
                         </div>
 
                         {isChecked && (
                             <div>
-                                <label htmlFor="email" className="email">email:</label>
+                                <label htmlFor="email" className="email">Email:</label>
                                 <input
                                     name="email"
                                     type="email"
-                                    id="location"
-                                    ref={locationRef}
+                                    id="email"
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                    ref={emailRef}
                                     required
                                     className="donate-location-input"
-                                    placeholder="Search..."
+                                    placeholder="Enter email"
                                 />
            
                                 <label htmlFor="Location" className="donate-location-label">Location of foodbank/charity:</label>
@@ -124,22 +127,21 @@ function RestaurantDonate() {
                                     name="location"
                                     type="text"
                                     id="location"
+                                    value={formData.location}
+                                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                                     ref={locationRef}
                                     required
                                     className="donate-location-input"
-                                    placeholder="Search..."
+                                    placeholder="Enter location"
                                 />
                             </div>
                         )}
+
                         {isSubmitted ? (
-                        <button type="submit" disabled className="donate-button">
-                            Submitting...
-                        </button>
-                    ) : (
-                        <button type="submit" className="donate-button">
-                            Submit
-                        </button>
-                    )}
+                            <button type="submit" disabled className="donate-button">Submitting...</button>
+                        ) : (
+                            <button type="submit" name = "onSubmit" className="donate-button">Submit</button>
+                        )}
                     </form>
                 </div>
             </div>
