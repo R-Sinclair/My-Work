@@ -51,8 +51,8 @@ public class DonationsController {
 
     }
     
-    //Get User by ID
-    @GetMapping("/Donation/{id}")
+    
+    @GetMapping("/findById/{id}")
     public ResponseEntity<Donation>getDonationById(@PathVariable(value = "id") long id) {
     	Optional<Donation> Donation = donationServices.findById(id);
 		if (Donation.isPresent())
@@ -72,8 +72,8 @@ public class DonationsController {
         return new ResponseEntity<>( HttpStatus.OK);
     }
     
-    @GetMapping("/Donation/findByRestaurantId")
-    public ResponseEntity<Donation> getUserByRestaurantId(@RequestParam Long restaurantId) {
+    @GetMapping("/findByRestaurantId/{restaurantId}")
+    public ResponseEntity<Donation> getUserByRestaurantId(@PathVariable(value = "restaurantId") long restaurantId) {
     	Optional<Donation> Donation = donationServices.findByRestaurantId(restaurantId);
 		if (Donation.isPresent())
 		{
@@ -83,9 +83,21 @@ public class DonationsController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/Donation/findByUserId")
-    public ResponseEntity<Donation> getUserByUserId(@RequestParam Long userId) {
+    @GetMapping("/findByUserId/{userId}")
+    public ResponseEntity<Donation> getByUserId(@PathVariable(value = "userId") long userId) {
     	Optional<Donation> Donation = (donationServices.findByUserId(userId));
+		if (Donation.isPresent())
+		{
+			return new ResponseEntity<>(Donation.get(), HttpStatus.OK);
+
+			}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        
+    }
+
+	@GetMapping("/findByDonationId/{donationId}")
+    public ResponseEntity<Donation> getByDonationId(@PathVariable(value = "donationId") int donationId) {
+    	Optional<Donation> Donation = (donationServices.findByDonationId(donationId));
 		if (Donation.isPresent())
 		{
 			return new ResponseEntity<>(Donation.get(), HttpStatus.OK);

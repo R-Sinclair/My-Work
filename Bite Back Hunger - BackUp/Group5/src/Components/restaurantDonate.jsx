@@ -8,6 +8,8 @@ function RestaurantDonate() {
     const donateRef = useRef();
     const locationRef = useRef();
     const emailRef = useRef();
+    const cityRef = useRef();
+    const postCodeRef = useRef();
     const [isChecked, setIsChecked] = useState(false);  
     const [isSubmitted, setIsSubmitted] = useState(false);  
     const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -15,10 +17,14 @@ function RestaurantDonate() {
 
     const [formData, setFormData] = useState({
                     email: '',
-                    location: ''
+                    location: '',
+                    city: '',
+                    postCode:''
             
     });
 
+
+  
 
     const navigate = useNavigate();  
     
@@ -33,12 +39,21 @@ function RestaurantDonate() {
             return;
         }
 
-        if (formData.location === '') {
+       else if (formData.location === '') {
             alert("Please add a location");
             return;
         }
 
-        if (email.length === 0 || !email.match(mailformat)) {
+        else if (formData.city === '') {
+            alert("Please add a city");
+            return;
+        }
+        else if (formData.postCode === '') {
+            alert("Please add a post code");
+            return;
+        }
+
+       else if (email.length === 0 || !email.match(mailformat)) {
             alert("Please add an email and make sure it's correct");
             return;
         }
@@ -60,7 +75,7 @@ function RestaurantDonate() {
                     donationId: DonationId,
                     restaurantId: id,
                     code: Code,
-                    location: locationRef.current.value,
+                    location: (locationRef.current.value + " "+cityRef.current.value +" "+postCodeRef.current.value),
                     userId: null, 
                 };
 
@@ -71,6 +86,8 @@ function RestaurantDonate() {
                     navigate('/Home');
                 }
 
+              
+
                
             } catch (error) {
                 console.error(error);
@@ -79,6 +96,10 @@ function RestaurantDonate() {
                        
             
             }
+            
+                
+            
+            
         };
     
 
@@ -108,7 +129,7 @@ function RestaurantDonate() {
                         </div>
 
                         {isChecked && (
-                            <div>
+                            <><div>
                                 <label htmlFor="email" className="email">Email:</label>
                                 <input
                                     name="email"
@@ -119,22 +140,47 @@ function RestaurantDonate() {
                                     ref={emailRef}
                                     required
                                     className="donate-location-input"
-                                    placeholder="Enter email"
-                                />
-           
-                                <label htmlFor="Location" className="donate-location-label">Location of foodbank/charity:</label>
-                                <input
-                                    name="location"
-                                    type="text"
-                                    id="location"
-                                    value={formData.location}
-                                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                                    ref={locationRef}
-                                    required
-                                    className="donate-location-input"
-                                    placeholder="Enter location"
-                                />
-                            </div>
+                                    placeholder="Enter email" />
+                            </div><div>
+
+                                    <label htmlFor="Location" className="donate-location-label">Location of foodbank/charity:</label>
+                                    <input
+                                        name="location"
+                                        type="text"
+                                        id="location"
+                                        value={formData.location}
+                                        onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                                        ref={locationRef}
+                                        required
+                                        className="donate-location-input"
+                                        placeholder="Enter address" />
+
+
+                                         <label htmlFor="city" className="donate-location-label"></label>
+                                    <input
+                                        name="city"
+                                        type="text"
+                                        id="city"
+                                        value={formData.city}
+                                        onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                                        ref={cityRef}
+                                        required
+                                        className="donate-location-input"
+                                        placeholder="Enter city" />
+
+                                         <label htmlFor="postCode" className="donate-location-label"></label>
+                                    <input
+                                        name="postCode"
+                                        type= "text"
+                                        id="postCode"
+                                        value={formData.postCode}
+                                        onChange={(e) => setFormData({ ...formData, postCode: e.target.value })}
+                                        ref={postCodeRef}
+                                        required
+                                        className="donate-location-input"
+                                        placeholder="Enter post code" />
+                                </div></>
+                            
                         )}
 
                         {isSubmitted ? (
