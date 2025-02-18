@@ -1,22 +1,22 @@
 package DataTransferObject;
 
-import Tables.UserType;
+
 
 public class DTORestaurants {
 	String Name;
 	String email;
 	String password;
-	UserType userType;
+	String userType;
 
 
 	
-	public DTORestaurants(String Name, String email, String password, Boolean Business, Boolean User) {
+	public DTORestaurants(String Name, String email, String password,String userType) {
 		super();
 		
 		this.Name = Name;
 		this.email = email;
 		this.password = password;
-		this.userType = convertType(Business,User);
+		this.userType = userType;
 	}
 	
 	
@@ -38,11 +38,11 @@ public class DTORestaurants {
 	}
 
 
-	public UserType getUserType() {
+	public String getUserType() {
 		return userType;
 	}
 
-	public void setUserType(UserType userType) {
+	public void setUserType(String userType) {
 		this.userType = userType;
 	}
 
@@ -54,24 +54,6 @@ public class DTORestaurants {
 		this.password = password;
 	}
 
-	public UserType convertType(Boolean Business, Boolean User) {
-		if(Business==true && User==false) {
-			userType = UserType.BUSINESS;
-		}
-		
-		else if(Business==false && User==true) {
-			userType = UserType.USER;
-		}
-		else if(Business==false && User==false) {
-			userType = UserType.NONE;
-		}
-		
-		
-		
-		return userType;
-		
-		
-		
-	}
+
 
 }

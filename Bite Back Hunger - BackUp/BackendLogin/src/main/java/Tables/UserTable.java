@@ -2,21 +2,22 @@ package Tables;
 
 import java.io.Serializable;
 import java.util.Date;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 
 @Entity
@@ -30,10 +31,8 @@ public class UserTable implements Serializable {
 	private Long id;
 	
 	@Column
-	private String firstName;
+	private String name;
 	
-	@Column
-	public String lastName;
 	
 	@NotBlank
 	@Column(unique=true)
@@ -42,9 +41,9 @@ public class UserTable implements Serializable {
 	@NotBlank
 	String password;
 	
-	@Enumerated(EnumType.STRING) 
+ 
 	@Column(nullable = false)
-	UserType userType;
+	String userType;
 	
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -65,10 +64,9 @@ public class UserTable implements Serializable {
 	}
 		
 	 
-	 public UserTable(String firstName,String lastName, String email, String password, UserType userType) {
+	 public UserTable(String name, String email, String password, String userType) {
 		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.userType = userType;
@@ -92,23 +90,16 @@ public class UserTable implements Serializable {
 	}
 
 
-	public String getfirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
 
 
-	public void setfirstName(String firstName) {
-		this.firstName = firstName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
-	public String getlastName() {
-		return lastName;
-	}
 
-
-	public void setlastName(String lastName) {
-		this.lastName = lastName;
-	}
 
 
 	public String getPassword() {
@@ -121,12 +112,12 @@ public class UserTable implements Serializable {
 	}
 
 
-	public UserType getUserType() {
+	public String getUserType() {
 		return userType;
 	}
 
 
-	public void setUserType(UserType userType) {
+	public void setUserType(String userType) {
 		this.userType = userType;
 	}
 
@@ -134,7 +125,7 @@ public class UserTable implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", first name=" + firstName +  ", last name=" + lastName +", email=" + email + ", password=" + password + ", userType="
+		return "User [id=" + id  +  ",  name=" + name +", email=" + email + ", password=" + password + ", userType="
 				+ userType + "]";
 	}
 	

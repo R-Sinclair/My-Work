@@ -9,6 +9,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -42,6 +44,10 @@ public class Donation implements Serializable {
 
 	@Column(name = "Location")
 	public String location;
+
+	@Enumerated(EnumType.STRING) 
+		@Column(nullable = false)
+		Completed completed;
 	
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -64,13 +70,14 @@ public class Donation implements Serializable {
 
 		
 	 
-	 public Donation( int donationId, Long restaurantId, int code, String location, Long userId) {
+	 public Donation( int donationId, Long restaurantId, int code, String location, Long userId, Completed completed) {
 		super();
 		this.donationId =  donationId;
 		this.restaurantId=  restaurantId;
 		this.code = code;
         this.location = location;
 		this.userId = userId;
+		this.completed = completed;
 	}
 	
 	public Long getId(){
@@ -93,6 +100,16 @@ public class Donation implements Serializable {
     {
         this.location = location;
     }
+	
+	public Completed getCompletedTask() {
+		return completed;
+	}
+
+
+	public void setCompletedTask(Completed completed) {
+		this.completed = completed;
+	}
+
 
 	
 	public int getDonationID() {
@@ -123,7 +140,7 @@ public class Donation implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Donation Table [Donation id=" + donationId + ", RestaurantID=" + restaurantId +  ", Location=" + location +", Code=" + code + ", User Id"+userId+"]";
+		return "Donation Table [Donation id=" + donationId + ", RestaurantID=" + restaurantId +  ", Location=" + location +", Code=" + code + ", User Id"+userId+ "Task status "+ completed+"]";
 	}
 	
 	

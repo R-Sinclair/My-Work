@@ -1,5 +1,7 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Layout from "./Layout";
+import { useNavigate } from "react-router";
+import axios from "axios";
 
 function RegistrationForm() {
     const nameRef = useRef();
@@ -7,13 +9,39 @@ function RegistrationForm() {
     const passwordRef = useRef();
     const retypePasswordRef = useRef();
     const agreeRef = useRef();
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+ 
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        business: false,
+        user: false
+    });
+
+    const handleCheckboxChange = (e) => {
+        const { name, checked } = e.target;
+
+
+        if (name === 'business') {
+            setFormData({ ...formData, business: checked, user: false });
+        } else if (name === 'user') {
+            setFormData({ ...formData, user: checked, business: false });
+        }
+    };
+
+
+    const handleReg = async (e) => {
         e.preventDefault();
 
-        // Validate form fields
+       
         if (!agreeRef.current.checked) {
             alert("You must agree to the Terms of Use and Privacy Policy.");
+            return;
+        }
+        if (!formData.business && !formData.user) {
+            alert("You must tick at least one box.");
             return;
         }
 
@@ -22,14 +50,62 @@ function RegistrationForm() {
             return;
         }
 
-        alert(`Name: ${nameRef.current.value}, Email: ${emailRef.current.value}`);
+        alert(`Name: ${nameRef.current.value}, Email: ${emailRef.current.value}, password: ${passwordRef.current.value}, ${formData.business}, ${formData.user}`);
+
+        try {
+
+            if (formData.business && !formData.user){
+                const RestData = {
+                    name: nameRef.current.value,
+                    email: emailRef.current.value,
+                    password: passwordRef.current.value,
+                   userType: "BUSINESS"
+                };
+
+                
+           const RestPost =  await axios.post(`http://localhost:8080/Restaurant/AddUser`, RestData);
+            
+           if (RestPost.status === 201) {
+            alert("Registered successfully.");
+            navigate('/Home');
+        }
+            }
+
+            else if (formData.user&& !formData.business)
+                {
+                    const userData = {
+                        name: nameRef.current.value,
+                        email: emailRef.current.value,
+                        password: passwordRef.current.value,
+                       userType: "USER"
+                    };
+                const UserPost = await axios.post(`http://localhost:8080/NormalUsers/AddUser`, userData);
+ 
+                if (UserPost.status === 201) {
+                    alert("Registered successfully.");
+                    navigate('/Home');
+                }
+                }
+
+        
+
+          
+
+           
+        } catch (error) {
+            console.error(error);
+            alert("There was an error with registration");
+            window.location.reload();
+                   
+        
+        }
     };
 
     return (
         <div>
             <Layout />
             <div style={styles.container}>
-                <form onSubmit={handleSubmit} style={styles.form}>
+                <form onSubmit={handleReg} style={styles.form}>
                     <h2 style={styles.heading}>Registration</h2>
                     <div style={styles.field}>
                         <label htmlFor="name" style={styles.label}>Name:</label>
@@ -47,6 +123,25 @@ function RegistrationForm() {
                         <label htmlFor="retypePassword" style={styles.label}>Re-type Password:</label>
                         <input type="password" id="retypePassword" ref={retypePasswordRef} required style={styles.input} />
                     </div>
+
+                    <div style={styles.field}>
+                        <input
+                            type="checkbox"
+                            name="business"
+                            checked={formData.business}
+                            onChange={handleCheckboxChange}
+                        />
+                        <label>I am a Restaurant user.</label>
+
+                        <input
+                            type="checkbox"
+                            name="user"
+                            checked={formData.user}
+                            onChange={handleCheckboxChange}
+                        />
+                        <label>I am a Normal user</label>
+                    </div>
+
                     <div style={styles.field}>
                         <label style={styles.checkboxLabel}>
                             <input type="checkbox" ref={agreeRef} style={styles.checkbox} /> I agree to the{" "}
@@ -54,6 +149,7 @@ function RegistrationForm() {
                             <a href="#" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
                         </label>
                     </div>
+
                     <button type="submit" style={styles.button}>Register</button>
                 </form>
             </div>
@@ -67,7 +163,7 @@ const styles = {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
-        backgroundColor: "#f1f8f6", // Soft light green background
+        backgroundColor: "#f1f8f6",
     },
     form: {
         padding: "30px",
@@ -81,7 +177,7 @@ const styles = {
     heading: {
         textAlign: "center",
         marginBottom: "20px",
-        color: "#2a7f62", // Darker green for heading
+        color: "#2a7f62", 
     },
     field: {
         marginBottom: "20px",
@@ -101,22 +197,16 @@ const styles = {
         boxSizing: "border-box",
         transition: "border-color 0.3s",
     },
-    inputFocus: {
-        borderColor: "#4CAF50", // Green border on focus
-    },
     button: {
         width: "100%",
         padding: "12px",
-        backgroundColor: "#4CAF50", // Green button
+        backgroundColor: "#4CAF50", 
         color: "white",
         border: "none",
         borderRadius: "5px",
         cursor: "pointer",
         fontSize: "16px",
         transition: "background-color 0.3s",
-    },
-    buttonHover: {
-        backgroundColor: "#45a049", // Darker green on hover
     },
     checkboxLabel: {
         fontSize: "14px",

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import DataTransferObject.DataTransfer;
 import Tables.UserTable;
-import Tables.UserType;
 import services.UserService;
 
 @RestController
@@ -37,15 +36,14 @@ public class UserController {
     @PostMapping("/AddUser")
     public ResponseEntity<Optional<UserTable>> addUser(@RequestBody DataTransfer data) {
     	
-    	if (data.getfirstName()==null ||
-    			data.getlastName()==null ||
+    	if (data.getName()==null ||
     		data.getEmail()==null ||
     		data.getPassword()==null ||
-    		data.getUserType() == UserType.NONE) {
+    		data.getUserType() == null) {
             return new ResponseEntity<>(Optional.ofNullable(null), HttpStatus.BAD_REQUEST);
         }
     	
-    	UserTable newUser = new UserTable(data.getfirstName(),data.getlastName(), data.getEmail(),
+    	UserTable newUser = new UserTable(data.getName(), data.getEmail(),
     			data.getPassword(), data.getUserType());
     	userService.addUser(newUser);
     	return new ResponseEntity<>(Optional.ofNullable(newUser),HttpStatus.CREATED);
@@ -53,7 +51,7 @@ public class UserController {
     }
     
     //Get User by ID
-    @GetMapping("/user/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<UserTable>getUserById(@PathVariable(value = "id") long id) {
     	Optional<UserTable> user1 = userService.findByID(id);
 		if (user1.isPresent())
@@ -66,7 +64,7 @@ public class UserController {
     
     
     //Delete a User by ID
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/Delete/{id}")
     public ResponseEntity<UserTable>  deleteUser(@PathVariable(value = "id") long id) {
         userService.deleteUser(id);
         String Deleted = "User Deleted"; 
@@ -74,8 +72,8 @@ public class UserController {
     }
     
     //Get User by Email
-    @GetMapping("/user/findByEmail")
-    public ResponseEntity<UserTable> getUserByEmail(@RequestParam String email) {
+    @GetMapping("/findByEmail/{email}")
+    public ResponseEntity<UserTable> getUserByEmail(@PathVariable(value = "email") String email) {
     	Optional<UserTable> user1 = Optional.ofNullable(userService.findByEmail(email));
 		if (user1.isPresent())
 		{
@@ -92,8 +90,7 @@ public class UserController {
 		{
 			UserTable UpdatedUser = OldUser.get();
 			UpdatedUser.setEmail(NewUser.getEmail());
-			UpdatedUser.setfirstName(NewUser.getfirstName());
-			UpdatedUser.setlastName(NewUser.getlastName());
+			UpdatedUser.setName(NewUser.getName());
 			UpdatedUser.setId(NewUser.getId());
 			UpdatedUser.setPassword(NewUser.getPassword());
 			UpdatedUser.setUserType(NewUser.getUserType());

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import DataTransferObject.DTODonations;
+import Tables.Completed;
 import Tables.Donation;
 import services.DonationServices;
 
@@ -39,13 +40,14 @@ public class DonationsController {
     	if (data.getDonationId()==0 ||
     			data.getRestaurantId()==null ||
     		data.getCode()==0 ||
+			data.getCompletedTask() == Completed.NONE||
                 "".equals(data.getLocation()) 
 			) {
             return new ResponseEntity<>(Optional.ofNullable(null), HttpStatus.BAD_REQUEST);
         }
     	
     	Donation newDonation = new Donation(data.getDonationId(),data.getRestaurantId(), data.getCode(),
-    			data.getLocation(), data.getUserId());
+    			data.getLocation(), data.getUserId(), data.getCompletedTask());
     	donationServices.addUser(newDonation);
     	return new ResponseEntity<>(Optional.ofNullable(newDonation),HttpStatus.CREATED);
 
@@ -107,6 +109,7 @@ public class DonationsController {
         
     }
 
+
     @PutMapping ("/UpdateDonationById/{id}")
 	public ResponseEntity<Donation> UpdateUserById (@RequestParam Long donationId, @RequestBody Donation NewDonation) 
 	{
@@ -116,7 +119,8 @@ public class DonationsController {
 			Donation UpdatedDonation = OldDonation.get();
 			UpdatedDonation.setUserId(NewDonation.getUserId());
 			UpdatedDonation.setLocation(NewDonation.getLocation());
-			
+			UpdatedDonation.setCompletedTask(NewDonation.getCompletedTask());
+
 			Donation DonationObject = donationServices.save(UpdatedDonation);
 			
 			return new ResponseEntity<>(DonationObject, HttpStatus.OK);

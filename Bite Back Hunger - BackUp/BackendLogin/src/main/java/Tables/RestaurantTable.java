@@ -39,9 +39,9 @@ import jakarta.persistence.TemporalType;
 		@NotBlank
 		String password;
 		
-		@Enumerated(EnumType.STRING) 
+
 		@Column(nullable = false)
-		UserType userType;
+		String userType;
 		
 		@Column(nullable = false, updatable = false)
 		@Temporal(TemporalType.TIMESTAMP)
@@ -62,7 +62,7 @@ import jakarta.persistence.TemporalType;
 		}
 			
 		 
-		 public RestaurantTable(String name, String email, String password, UserType userType) {
+		 public RestaurantTable(String name, String email, String password, String userType) {
 			super();
 			this.name = name;
 			this.email = email;
@@ -110,12 +110,12 @@ import jakarta.persistence.TemporalType;
 		}
 
 
-		public UserType getUserType() {
+		public String getUserType() {
 			return userType;
 		}
 
 
-		public void setUserType(UserType userType) {
+		public void setUserType(String userType) {
 			this.userType = userType;
 		}
 

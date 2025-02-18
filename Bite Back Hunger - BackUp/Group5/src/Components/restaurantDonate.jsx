@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import RestaurantLayout from './RestaurantLayout';
 import './RestaurantDonate.css';  
 import axios from 'axios';
+import React from 'react';
 
 function RestaurantDonate() {
     const donateRef = useRef();
@@ -19,7 +20,9 @@ function RestaurantDonate() {
                     email: '',
                     location: '',
                     city: '',
-                    postCode:''
+                    postCode:'',
+                    
+
             
     });
 
@@ -76,7 +79,8 @@ function RestaurantDonate() {
                     restaurantId: id,
                     code: Code,
                     location: (locationRef.current.value + " "+cityRef.current.value +" "+postCodeRef.current.value),
-                    userId: null, 
+                    userId: null,
+                    completed: 'UNCOMPLETEDTASK'
                 };
 
                 const responsePost = await axios.post('http://localhost:8080/Donations/AddDonations', dataToSend);
@@ -85,6 +89,8 @@ function RestaurantDonate() {
                     alert("Registered successfully.");
                     navigate('/Home');
                 }
+
+            
 
               
 

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import Tables.RestaurantTable;
 import Tables.UserTable;
-import  Tables.UserType;
+import repository.DonationRepo;
 import repository.RestaurantRepo;
 import repository.UserRepo;
 
@@ -17,11 +17,13 @@ public class Tester implements CommandLineRunner{
 	 
 	private UserRepo userRepo;
 	private RestaurantRepo restaurantRepo;
+	private DonationRepo donationRepo;
 
 	@Autowired
-    public Tester(UserRepo userRepo, RestaurantRepo restaurantRepo) {
+    public Tester(UserRepo userRepo, RestaurantRepo restaurantRepo, DonationRepo donationRepo) {
         this.userRepo = userRepo;
         this.restaurantRepo = restaurantRepo;
+		this.donationRepo = donationRepo;
     }
 
 	
@@ -31,22 +33,22 @@ public class Tester implements CommandLineRunner{
 	 public void run(String... args) throws Exception {
 		userRepo.deleteAll();
 		restaurantRepo.deleteAll();
-		
+		donationRepo.deleteAll();
 	
 		
 		
 		
 		
-		UserTable Alice = new UserTable("Alice", "hey","alice@sample.com", "alice_pass", UserType.USER);
+		UserTable Alice = new UserTable("Alice hey","alice@sample.com", "alice_pass", "USER");
 		userRepo.save(Alice);
 		
-		UserTable Carol = new UserTable("Carol", "hey","carol@sample.com", "carol_pass", UserType.BUSINESS);
+		UserTable Carol = new UserTable("Carol hey","carol@sample.com", "carol_pass", "USER");
 		userRepo.save(Carol);		
 
-		UserTable Altti = new UserTable("Altti","hey", "altti@sample.com", "altti_pass", UserType.USER);
+		UserTable Altti = new UserTable("Altti hey", "altti@sample.com", "altti_pass", "USER");
 		userRepo.save(Altti);
 
-		RestaurantTable Bern = new RestaurantTable("hey", "altti@sample.com", "altti_pass", UserType.BUSINESS);
+		RestaurantTable Bern = new RestaurantTable("hey", "altti@sample.com", "altti_pass", "BUSINESS");
 		restaurantRepo.save(Bern);
 
 		//print all users

@@ -1,11 +1,14 @@
 import React, { useRef } from "react";
 import Layout from "./Layout";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 function LoginPage() {
     const emailRef = useRef();
     const passwordRef = useRef();
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Validate inputs
@@ -14,7 +17,57 @@ function LoginPage() {
             return;
         }
 
-        alert(`Email: ${emailRef.current.value}, Password: ${passwordRef.current.value}`);
+        try {
+            // Reset any previously stored login state (if needed)
+            localStorage.clear(); // Clear localStorage (or sessionStorage if used)
+
+            // Check for normal user
+            const emailCheckUser = await axios.get(`http://localhost:8080/NormalUsers/findByEmail/${emailRef.current.value}`);
+
+            const responseUser = emailCheckUser.data;
+            const passwordUser = responseUser.password;
+            const userType = responseUser.userType;
+
+            if (emailCheckUser.status === 200 && passwordUser === passwordRef.current.value && userType === 'USER') {
+                alert("Successful login as Normal User");
+
+                // Store necessary session or user data (if needed)
+                localStorage.setItem("userType", "USER");
+                localStorage.setItem("userEmail", emailRef.current.value);
+
+                // Navigate to Home for normal users
+                navigate('/Home');
+                return;
+            }
+        } catch (error) {
+            console.log("Normal User login failed: ", error); // Log the error for debugging
+        }
+
+        try {
+            // Check for restaurant user
+            const emailCheckRestaurant = await axios.get(`http://localhost:8080/Restaurant/email/${emailRef.current.value}`);
+
+            const responseRestaurant = emailCheckRestaurant.data;
+            const passwordRestaurant = responseRestaurant.password;
+            const userTypeRestaurant = responseRestaurant.userType;
+
+            if (emailCheckRestaurant.status === 200 && passwordRestaurant === passwordRef.current.value && userTypeRestaurant === 'BUSINESS') {
+                alert("Successful login as Restaurant User");
+
+                // Store necessary session or user data (if needed)
+                localStorage.setItem("userType", "BUSINESS");
+                localStorage.setItem("userEmail", emailRef.current.value);
+
+                // Navigate to RestaurantDashboard for restaurant users
+                navigate('/Home');
+                return;
+            }
+        } catch (error) {
+            console.log("Restaurant User login failed: ", error); // Log the error for debugging
+        }
+
+        // If no match is found for both types, alert the user
+        alert("Invalid login credentials.");
     };
 
     return (
@@ -56,7 +109,7 @@ const styles = {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
-        backgroundColor: "#f1f8f6", // Soft light green background
+        backgroundColor: "#f1f8f6",
     },
     form: {
         padding: "30px",
@@ -70,7 +123,7 @@ const styles = {
     heading: {
         textAlign: "center",
         marginBottom: "20px",
-        color: "#2a7f62", // Darker green for heading
+        color: "#2a7f62", 
     },
     field: {
         marginBottom: "20px",
@@ -90,22 +143,16 @@ const styles = {
         boxSizing: "border-box",
         transition: "border-color 0.3s",
     },
-    inputFocus: {
-        borderColor: "#4CAF50", // Green border on focus
-    },
     button: {
         width: "100%",
         padding: "12px",
-        backgroundColor: "#4CAF50", // Green button
+        backgroundColor: "#4CAF50", 
         color: "white",
         border: "none",
         borderRadius: "5px",
         cursor: "pointer",
         fontSize: "16px",
         transition: "background-color 0.3s",
-    },
-    buttonHover: {
-        backgroundColor: "#45a049", // Darker green on hover
     },
 };
 

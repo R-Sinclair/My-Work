@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import DataTransferObject.DTORestaurants;
 import Tables.RestaurantTable;
-import Tables.UserType;
 import services.RestaurantServices;
 
 @RestController
@@ -40,7 +39,7 @@ public class RestaurantController {
     		data.getName()==null ||
     		data.getEmail()==null ||
     		data.getPassword()==null ||
-    		data.getUserType() == UserType.NONE) {
+    		data.getUserType() == null) {
             return new ResponseEntity<>(Optional.ofNullable(null), HttpStatus.BAD_REQUEST);
         }
     	

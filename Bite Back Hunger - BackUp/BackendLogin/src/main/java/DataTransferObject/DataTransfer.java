@@ -1,38 +1,29 @@
 package DataTransferObject;
 
-import Tables.UserType;
 
 public class DataTransfer {
-	String lastName;
+	String name;
 	String email;
 	String password;
-	UserType userType;
-	String firstName;
+	String userType;
 
 	
-	public DataTransfer(String firstName,String lastName, String email, String password, Boolean Business, Boolean User) {
+	public DataTransfer(String name, String email, String password, String userType ) {
 		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.name = name;
 		this.email = email;
 		this.password = password;
-		this.userType = convertType(Business,User);
+		this.userType = userType;
 	}
 	
-	public String getfirstName() {
-		return firstName;
-	}
-
-	public void setfirstName(String firstName) {
-		this.firstName = firstName;
-	}
 	
-	public String getlastName() {
-		return lastName;
+	
+	public String getName() {
+		return name;
 	}
 
-	public void setlastName(String lastName) {
-		this.lastName = lastName;
+	public void setlastName(String name) {
+		this.name = name;
 	}
 
 	public String getEmail() {
@@ -44,11 +35,11 @@ public class DataTransfer {
 	}
 
 
-	public UserType getUserType() {
+	public String getUserType() {
 		return userType;
 	}
 
-	public void setUserType(UserType userType) {
+	public void setUserType(String userType) {
 		this.userType = userType;
 	}
 
@@ -60,24 +51,6 @@ public class DataTransfer {
 		this.password = password;
 	}
 
-	public UserType convertType(Boolean Business, Boolean User) {
-		if(Business==true && User==false) {
-			userType = UserType.BUSINESS;
-		}
-		
-		else if(Business==false && User==true) {
-			userType = UserType.USER;
-		}
-		else if(Business==false && User==false) {
-			userType = UserType.NONE;
-		}
-		
-		
-		
-		return userType;
-		
-		
-		
-	}
+	
 
 }
