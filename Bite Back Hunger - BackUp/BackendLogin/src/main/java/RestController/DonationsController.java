@@ -47,7 +47,7 @@ public class DonationsController {
         }
     	
     	Donation newDonation = new Donation(data.getDonationId(),data.getRestaurantId(), data.getCode(),
-    			data.getLocation(), data.getUserId(), data.getCompletedTask());
+    			data.getLocation(), data.getUserId(), data.getCompletedTask(), data.getName());
     	donationServices.addUser(newDonation);
     	return new ResponseEntity<>(Optional.ofNullable(newDonation),HttpStatus.CREATED);
 

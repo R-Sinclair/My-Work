@@ -10,9 +10,10 @@ public class DTODonations {
     public String Location;
     public Long UserId;
     public Completed completed;
+    public String name;
 
     // Constructor with simplified logic
-    public DTODonations(int DonationId, Long RestaurantId, int Code, String Location, Long UserId, Boolean isCompleted) {
+    public DTODonations(int DonationId, Long RestaurantId, int Code, String Location, Long UserId, Boolean isCompleted, String name) {
         super();
         this.DonationId = DonationId;
         this.RestaurantId = RestaurantId;
@@ -20,6 +21,7 @@ public class DTODonations {
         this.Location = Location;
         this.UserId = UserId;
         this.completed = convertType(isCompleted);
+        this.name = name;
     }
 
  
@@ -29,6 +31,14 @@ public class DTODonations {
 
     public void setUserId(Long UserId) {
         this.UserId = UserId;
+    }
+    
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getDonationId() {

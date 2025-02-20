@@ -11,17 +11,16 @@ function LoginPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Validate inputs
         if (!emailRef.current.value || !passwordRef.current.value) {
             alert("Both fields are required.");
             return;
         }
 
         try {
-            // Reset any previously stored login state (if needed)
-            localStorage.clear(); // Clear localStorage (or sessionStorage if used)
+           
+            localStorage.clear(); 
 
-            // Check for normal user
+            
             const emailCheckUser = await axios.get(`http://localhost:8080/NormalUsers/findByEmail/${emailRef.current.value}`);
 
             const responseUser = emailCheckUser.data;
@@ -31,20 +30,19 @@ function LoginPage() {
             if (emailCheckUser.status === 200 && passwordUser === passwordRef.current.value && userType === 'USER') {
                 alert("Successful login as Normal User");
 
-                // Store necessary session or user data (if needed)
+                
                 localStorage.setItem("userType", "USER");
                 localStorage.setItem("userEmail", emailRef.current.value);
 
-                // Navigate to Home for normal users
-                navigate('/Home');
+                navigate('/UHomePage');
                 return;
             }
         } catch (error) {
-            console.log("Normal User login failed: ", error); // Log the error for debugging
+            console.log("Normal User login failed: ", error); 
         }
 
         try {
-            // Check for restaurant user
+          
             const emailCheckRestaurant = await axios.get(`http://localhost:8080/Restaurant/email/${emailRef.current.value}`);
 
             const responseRestaurant = emailCheckRestaurant.data;
@@ -54,19 +52,19 @@ function LoginPage() {
             if (emailCheckRestaurant.status === 200 && passwordRestaurant === passwordRef.current.value && userTypeRestaurant === 'BUSINESS') {
                 alert("Successful login as Restaurant User");
 
-                // Store necessary session or user data (if needed)
+               
                 localStorage.setItem("userType", "BUSINESS");
                 localStorage.setItem("userEmail", emailRef.current.value);
 
-                // Navigate to RestaurantDashboard for restaurant users
-                navigate('/Home');
+               
+                navigate('/RHomePage');
                 return;
             }
         } catch (error) {
             console.log("Restaurant User login failed: ", error); // Log the error for debugging
         }
 
-        // If no match is found for both types, alert the user
+       
         alert("Invalid login credentials.");
     };
 

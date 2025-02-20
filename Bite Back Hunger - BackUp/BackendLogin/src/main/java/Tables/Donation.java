@@ -36,6 +36,9 @@ public class Donation implements Serializable {
 	@Column(name = "Restaurant_id")
 	public Long restaurantId;
 	
+	@Column(name = "Restaurant_name")
+	public String name;
+	
 	@Column(nullable = true, updatable= true, name = "User_id")
 	public Long userId;
 	
@@ -70,7 +73,7 @@ public class Donation implements Serializable {
 
 		
 	 
-	 public Donation( int donationId, Long restaurantId, int code, String location, Long userId, Completed completed) {
+	 public Donation( int donationId, Long restaurantId, int code, String location, Long userId, Completed completed, String name) {
 		super();
 		this.donationId =  donationId;
 		this.restaurantId=  restaurantId;
@@ -78,7 +81,16 @@ public class Donation implements Serializable {
         this.location = location;
 		this.userId = userId;
 		this.completed = completed;
-	}
+		this.name = name;
+		}
+	 
+	 public String getName(){
+			return name;
+		}
+		public void setName(String name){
+			this.name = name;
+		}
+
 	
 	public Long getId(){
 		return id;

@@ -4,7 +4,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Home/Home';
 import LoginPage from './Components/LoginPage';
 import RegistrationForm from './Components/RegistrationForm';
-import RestaurantDonate from './Components/RestaurantDonate';
+import RestaurantDonate from './Donations/RestaurantDonate';
+import UserLayout from './Components/UserLayout';
+import UHomePage from './Components/UHomePage';
+import RHomePage from './Components/RHomePage';
+import UserDonate from './Donations/UserDonate';
+import DonationRSide from './Donations/DonationRSide';
+import DonationUSide from './Donations/DonationUSide';
 
 
 
@@ -21,6 +27,13 @@ import RestaurantDonate from './Components/RestaurantDonate';
           <Route path={'/Login'} element={<LoginPage/>}></Route>
           <Route path={'/Sign_Up'} element={<RegistrationForm/>}></Route>
           <Route path={'/RestaurantDonate'} element={<RestaurantDonate/>}></Route>
+          <Route path={'/UserDonate'} element={<UserDonate/>}></Route>
+          <Route path={'/UHomePage'} element={<UHomePage/>}></Route>
+          <Route path={'/RHomePage'} element={<RHomePage/>}></Route>
+          <Route path={'/DonationRSide'} element={<DonationRSide/>}></Route>
+          <Route path={'/DonationUSide'} element={<DonationUSide/>}></Route>
+          
+          
          
         </Routes>
       </BrowserRouter>

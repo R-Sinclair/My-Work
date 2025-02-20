@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import RestaurantLayout from './RestaurantLayout';
+import RestaurantLayout from '../Components/RestaurantLayout';
 import './RestaurantDonate.css';  
 import axios from 'axios';
 import React from 'react';
@@ -67,6 +67,7 @@ function RestaurantDonate() {
                 const response = await axios.get(`http://localhost:8080/Restaurant/email/${email}`);
                 const restaurantId = response.data
                 const id = restaurantId.id
+                const name = restaurantId.name
 
                 setUserId(id);
                
@@ -80,14 +81,15 @@ function RestaurantDonate() {
                     code: Code,
                     location: (locationRef.current.value + " "+cityRef.current.value +" "+postCodeRef.current.value),
                     userId: null,
-                    completed: 'UNCOMPLETEDTASK'
+                    completed: 'UNCOMPLETEDTASK',
+                    name: name
                 };
 
                 const responsePost = await axios.post('http://localhost:8080/Donations/AddDonations', dataToSend);
                 
                 if (responsePost.status === 201) {
-                    alert("Registered successfully.");
-                    navigate('/Home');
+                    alert("Donation Sent.");
+                    navigate('/DonationRSide');
                 }
 
             

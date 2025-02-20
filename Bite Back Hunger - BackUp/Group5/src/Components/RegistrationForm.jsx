@@ -67,7 +67,7 @@ function RegistrationForm() {
             
            if (RestPost.status === 201) {
             alert("Registered successfully.");
-            navigate('/Home');
+            navigate('/RHomePage');
         }
             }
 
@@ -83,7 +83,7 @@ function RegistrationForm() {
  
                 if (UserPost.status === 201) {
                     alert("Registered successfully.");
-                    navigate('/Home');
+                    navigate('/UHomePage');
                 }
                 }
 
@@ -109,7 +109,7 @@ function RegistrationForm() {
                     <h2 style={styles.heading}>Registration</h2>
                     <div style={styles.field}>
                         <label htmlFor="name" style={styles.label}>Name:</label>
-                        <input type="text" id="name" ref={nameRef} required style={styles.input} />
+                        <input type="text" id="name" ref={nameRef} required style={styles.input} placeholder="if a Restaurant owner please put the business name" />
                     </div>
                     <div style={styles.field}>
                         <label htmlFor="email" style={styles.label}>Email:</label>
