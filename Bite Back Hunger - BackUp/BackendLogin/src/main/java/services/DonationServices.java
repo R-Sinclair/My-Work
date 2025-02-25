@@ -50,9 +50,9 @@ public class DonationServices {
    
    
 	
-	public void deleteDonation(Long id) {
-		Donation donation = donationRepo.findById(id)
-				  .orElseThrow(() -> new ResourceNotFoundException("Donation", "id", id));
+	public void deleteDonationByDonationId(int donationId) {
+		Donation donation = donationRepo.findByDonationId(donationId)
+				  .orElseThrow(() -> new ResourceNotFoundException("Donation", "id", donationId));
 		donationRepo.delete(donation);
 	}
 
@@ -60,8 +60,8 @@ public class DonationServices {
 		return donationRepo.save(updatedDonation);
 
 	}
-	
 
+	
 
 	
 

@@ -66,8 +66,18 @@ function RegistrationForm() {
            const RestPost =  await axios.post(`http://localhost:8080/Restaurant/AddUser`, RestData);
             
            if (RestPost.status === 201) {
+
+            const emailCheckR = await axios.get(`http://localhost:8080/Restaurant/email/${emailRef.current.value}`);
+
+            const responseR = emailCheckR.data;
+            const idRestaurant = responseR.id; 
+
+            sessionStorage.setItem("restaurantId", idRestaurant);
+            sessionStorage.setItem("restaurantEmail", emailRef.current.value);
+
             alert("Registered successfully.");
             navigate('/RHomePage');
+            
         }
             }
 
@@ -82,6 +92,13 @@ function RegistrationForm() {
                 const UserPost = await axios.post(`http://localhost:8080/NormalUsers/AddUser`, userData);
  
                 if (UserPost.status === 201) {
+
+                    const emailCheckU = await axios.get(`http://localhost:8080/NormalUsers/findByEmail/${emailRef.current.value}`);
+                    const responseU = emailCheckU.data;
+                    const idUser = responseU.id; 
+
+                    sessionStorage.setItem("idUser",idUser);
+                    sessionStorage.setItem("userEmail", emailRef.current.value);
                     alert("Registered successfully.");
                     navigate('/UHomePage');
                 }

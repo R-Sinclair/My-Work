@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -67,9 +68,9 @@ public class DonationsController {
     
     
    
-    @DeleteMapping("/Donation/{id}")
-    public ResponseEntity<Donation>  deleteDonation(@RequestParam Long donationId) {
-        donationServices.deleteDonation(donationId);
+    @DeleteMapping("/delete/{donationId}")
+    public ResponseEntity<Donation>  deleteDonationByDonationId(@PathVariable(value = "donationId") int donationId) {
+        donationServices.deleteDonationByDonationId(donationId);
         String Deleted = "User Deleted"; 
         return new ResponseEntity<>( HttpStatus.OK);
     }
@@ -110,17 +111,19 @@ public class DonationsController {
     }
 
 
-    @PutMapping ("/UpdateDonationById/{id}")
-	public ResponseEntity<Donation> UpdateUserById (@RequestParam Long donationId, @RequestBody Donation NewDonation) 
+    @PatchMapping ("/UpdateDonationById/{donationId}")
+	public ResponseEntity<Donation> UpdateUserById (@PathVariable(value = "donationId") int donationId, @RequestBody Donation NewDonation) 
 	{
-		Optional<Donation> OldDonation = donationServices.findById(donationId);
+		Optional<Donation> OldDonation = donationServices.findByDonationId(donationId);
 		if (OldDonation.isPresent())
 		{
 			Donation UpdatedDonation = OldDonation.get();
-			UpdatedDonation.setUserId(NewDonation.getUserId());
-			UpdatedDonation.setLocation(NewDonation.getLocation());
-			UpdatedDonation.setCompletedTask(NewDonation.getCompletedTask());
-
+			if (UpdatedDonation.getUserId() == null) {
+                UpdatedDonation.setUserId(UpdatedDonation.getUserId());
+            }
+            if (UpdatedDonation.getCompletedTask() != null) {
+                UpdatedDonation.setCompletedTask(UpdatedDonation.getCompletedTask());
+            }
 			Donation DonationObject = donationServices.save(UpdatedDonation);
 			
 			return new ResponseEntity<>(DonationObject, HttpStatus.OK);

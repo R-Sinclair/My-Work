@@ -26,13 +26,14 @@ function LoginPage() {
             const responseUser = emailCheckUser.data;
             const passwordUser = responseUser.password;
             const userType = responseUser.userType;
+            const idUser = responseUser.id;
 
             if (emailCheckUser.status === 200 && passwordUser === passwordRef.current.value && userType === 'USER') {
                 alert("Successful login as Normal User");
 
                 
-                localStorage.setItem("userType", "USER");
-                localStorage.setItem("userEmail", emailRef.current.value);
+                sessionStorage.setItem("idUser",idUser);
+                sessionStorage.setItem("userEmail", emailRef.current.value);
 
                 navigate('/UHomePage');
                 return;
@@ -48,20 +49,21 @@ function LoginPage() {
             const responseRestaurant = emailCheckRestaurant.data;
             const passwordRestaurant = responseRestaurant.password;
             const userTypeRestaurant = responseRestaurant.userType;
+            const idRestaurant = responseRestaurant.id; 
 
             if (emailCheckRestaurant.status === 200 && passwordRestaurant === passwordRef.current.value && userTypeRestaurant === 'BUSINESS') {
                 alert("Successful login as Restaurant User");
 
                
-                localStorage.setItem("userType", "BUSINESS");
-                localStorage.setItem("userEmail", emailRef.current.value);
+                sessionStorage.setItem("restaurantId", idRestaurant);
+                sessionStorage.setItem("restaurantEmail", emailRef.current.value);
 
                
                 navigate('/RHomePage');
                 return;
             }
         } catch (error) {
-            console.log("Restaurant User login failed: ", error); // Log the error for debugging
+            console.log("Restaurant User login failed: ", error); 
         }
 
        

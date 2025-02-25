@@ -1,88 +1,44 @@
-import React from "react";
-import RestaurantDonate from "./RestaurantDonate";
-import RestaurantLayout from "../Components/RestaurantLayout";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import UserLayout from '../Components/UserLayout';
+import axios from 'axios';
+import RestaurantLayout from '../Components/RestaurantLayout';
 
-function DonationRSide(){
-
-const id =  setUserId();
-    
-    const donation= async () =>
-    {
-            
-            const codeS = await axios.get(`http://localhost:8080/Donation/findByRestaurantId/${id}`);
-            const donationData = codeS.data
-            const code = donationData.code
-            const locality = donationData.location
+function DonationRSide() {
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const navigate = useNavigate();
+    const donationName = queryParams.get('donationName');
+    const locations = queryParams.get('location');
+    const code = queryParams.get('code');
+    const donationId = queryParams.get('id');
 
     
-        }
 
 
-        const handleComplete = async (event)=>
-        {
-            event.preventDefault()
-            const Handle = await axios.put(`http://localhost:8080/Donation/findByRestaurantId/${id}`);
-            const completed = Handle.data;
 
-            let beans = false;
 
-            if (!completed.completed == beans)
-                {
-                    alert("donation completetd ");
-                    navigate('/Home');
-                }
-        }
-    return(
+    return (
         <div>
-      
             <RestaurantLayout />
-            <div style={{ padding: "20px" }}>
-                <h2>Donation Details</h2>
-
-               
+            {donationName && locations && code ? (
                 <div>
-                    <label htmlFor="code">Donation Code:</label>
-                    <input
-                        id="code"
-                        value={donation.code || "N/A"}
-                        readOnly
-                        style={{ padding: "10px", width: "200px", marginBottom: "10px" }}
-                    />
+                    <h1>Donation Details for {donationName}</h1>
+                    <ul>
+                        <li><strong>Donation Name:</strong> {donationName}{}</li>
+                        <li><strong>Location:</strong> {locations} {donationId}</li>
+                        <li><strong>Donation Code:</strong> {code}</li>
+                    </ul>
                 </div>
+            ) : (
+                <p>No donation details available.</p>
+            )}
 
-                <div>
-                    <label htmlFor="location">Location:</label>
-                    <input
-                        id="location"
-                        value={donation.location || "N/A"}
-                        readOnly
-                        style={{ padding: "10px", width: "200px", marginBottom: "20px" }}
-                    />
-                </div>
-
-                {/* Submit button to complete the donation */}
-                <button
-                    onClick={handleComplete}
-                    style={{
-                        padding: "10px 20px",
-                        backgroundColor: "#28a745",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                    }}
-                >
-                    Mark Donation as Completed
-                </button>
-
-                {isCompleted && (
-                    <div style={{ marginTop: "20px", color: "green" }}>
-                        <strong>Donation has been completed!</strong>
-                    </div>
-                )}
-            </div>
+            <button type="submit">
+                Submit
+            </button>
         </div>
     );
+}
 
-} export default DonationRSide;
+export default DonationRSide;

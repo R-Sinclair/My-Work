@@ -89,7 +89,8 @@ function RestaurantDonate() {
                 
                 if (responsePost.status === 201) {
                     alert("Donation Sent.");
-                    navigate('/DonationRSide');
+                    navigate(`/DonationRSide?donationName=${name}
+                        &location=${dataToSend.location}&code=${dataToSend.code}&id=${DonationId}`);
                 }
 
             
