@@ -11,6 +11,7 @@ import RHomePage from './Components/RHomePage';
 import UserDonate from './Donations/UserDonate';
 import DonationRSide from './Donations/DonationRSide';
 import DonationUSide from './Donations/DonationUSide';
+import ReportPage from './Components/ReportPage';
 
 
 
@@ -32,6 +33,7 @@ import DonationUSide from './Donations/DonationUSide';
           <Route path={'/RHomePage'} element={<RHomePage/>}></Route>
           <Route path={'/DonationRSide'} element={<DonationRSide/>}></Route>
           <Route path={'/DonationUSide'} element={<DonationUSide/>}></Route>
+          <Route path={'/Reportpage'} element={<ReportPage/>}></Route>
           
           
          

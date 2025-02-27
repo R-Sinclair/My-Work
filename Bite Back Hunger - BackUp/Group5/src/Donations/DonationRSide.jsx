@@ -13,7 +13,7 @@ function DonationRSide() {
     const code = queryParams.get('code');
     const donationId = queryParams.get('id');
 
-    
+
 
 
 
@@ -34,9 +34,7 @@ function DonationRSide() {
                 <p>No donation details available.</p>
             )}
 
-            <button type="submit">
-                Submit
-            </button>
+           
         </div>
     );
 }
