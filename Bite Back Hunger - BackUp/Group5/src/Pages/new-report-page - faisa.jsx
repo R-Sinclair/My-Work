@@ -1,6 +1,9 @@
-import React, { useRef } from "react";
-import Layout from "./Layout";
-import axios from "axios";
+import React, { useRef, useState } from "react";
+import { createReport } from "../Services/reportService - faisa";
+import RestaurantLayout from "../Components/RestaurantLayout";
+import { useNavigate } from "react-router";
+
+
 
 function ReportPage() {
     const missingItemsRef = useRef();
@@ -8,33 +11,50 @@ function ReportPage() {
     const wrongOrderRef = useRef();
     const otherRef = useRef();
     const descriptionRef = useRef();
+    const navigate = useNavigate();
+
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setErrorMessage("");
+    
         const selectedIssues = [];
         if (missingItemsRef.current.checked) selectedIssues.push("Missing Items");
         if (expiredFoodRef.current.checked) selectedIssues.push("Expired Food");
         if (wrongOrderRef.current.checked) selectedIssues.push("Wrong Order");
         if (otherRef.current.checked) selectedIssues.push("Other");
-
-        if (selectedIssues.length === 0) {
-            alert("Please select at least one issue.");
+    
+        if (descriptionRef.current.value.trim() === "") {
+            setErrorMessage("Please fill in a description.");
             return;
         }
-
-        alert(`Issues Reported: ${selectedIssues.join(", ")}\nDescription: ${descriptionRef.current.value}`);
-
-        const pos = await axios.post('')// add post url here
+    
+        const reportData = {
+            issueType: selectedIssues.join(", "),
+            description: descriptionRef.current.value,
+        };
+    
+        try {
+            const response = await createReport(reportData);
+            alert('report sent');
+            navigate('/RHomePage')
+        } catch (error) {
+            setErrorMessage("Failed to submit report. Try again.");
+        }
     };
+    
 
     return (
-
         <div>
-        <Layout/>
+        <RestaurantLayout/>
         <div style={styles.container}>
             <form onSubmit={handleSubmit} style={styles.form}>
                 <h2 style={styles.title}>Submit a Report</h2>
+
+                {errorMessage && <p style={styles.error}>{errorMessage}</p>}
+                {successMessage && <p style={styles.success}>{successMessage}</p>}
 
                 <div style={styles.checkboxGroup}>
                     <label style={styles.checkboxLabel}>
@@ -53,12 +73,12 @@ function ReportPage() {
 
                 <div style={styles.field}>
                     <label htmlFor="description">Description:</label>
-                    <textarea id="description" ref={descriptionRef} rows="5" style={styles.textarea} required></textarea>
+                    <textarea id="description" ref={descriptionRef} rows="5" style={styles.textarea}></textarea>
                 </div>
 
                 <button type="submit" style={styles.button}>Submit Report</button>
             </form>
-        </div>
+            </div>
         </div>
     );
 }
@@ -119,8 +139,16 @@ const styles = {
         borderRadius: "5px",
         cursor: "pointer",
     },
+    error: {
+        color: "red",
+        fontSize: "14px",
+        marginBottom: "10px",
+    },
+    success: {
+        color: "green",
+        fontSize: "14px",
+        marginBottom: "10px",
+    },
 };
 
 export default ReportPage;
-
-

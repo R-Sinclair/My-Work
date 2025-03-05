@@ -1,6 +1,5 @@
 import React from "react";
-import { Navigate } from "react-router";
-import RestaurantLayout from "./RestaurantLayout";
+import RestaurantLayout from "../Components/RestaurantLayout";
 
 function RHomePage()
 {

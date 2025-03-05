@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function UserLayout() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+
 
   const handleMouseEnter = () => {
     setIsDropdownOpen(true);
@@ -12,10 +14,17 @@ export default function UserLayout() {
     setIsDropdownOpen(false);
   };
 
+  const signOut = ()  =>
+    {
+      sessionStorage.removeItem("idUser");
+      sessionStorage.removeItem("userEmail");
+      navigate('/Home');
+    };
+
   return (
     <div style={styles.navbar}>
       
-      <Link to='/Home' style={styles.navLink}>Home</Link>
+      <Link to='/SignInHome' style={styles.navLink}>Home</Link>
       <div 
         style={styles.dropdown}
         onMouseEnter={handleMouseEnter} 
@@ -30,9 +39,16 @@ export default function UserLayout() {
           </div>
         )}
       </div>
-      <a href="#news" style={styles.navLink}>News</a>
+      <Link to='/Reward' style={styles.navLink}>rewards</Link>
       <Link to='/UserDonate' style={styles.navLink}>Donate Assist</Link>
       <input type="text" style={styles.searchBar} placeholder="Search..." />
+      <div>
+      <u
+onClick={signOut}
+style={styles.signOut}
+>Sign out</u>
+</div>
+
     </div>
   );
 }
@@ -96,4 +112,12 @@ const styles = {
     border: "1px solid #ccc",
     borderRadius: "5px",
   },
+  signOut:{
+    color: "blue",
+    cursor: "pointer",
+    fontSize:"12px",
+    padding: "10px 20px",
+    position: "relative"
+
+  }
 };

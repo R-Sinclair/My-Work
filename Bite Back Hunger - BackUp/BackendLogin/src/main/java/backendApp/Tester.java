@@ -56,8 +56,6 @@ public class Tester implements CommandLineRunner{
 		restaurantRepo.save(Bern);
 		
 
-
-		//print all users
 		for (UserTable user : userRepo.findAll()) {
             System.out.println(user.toString());
 

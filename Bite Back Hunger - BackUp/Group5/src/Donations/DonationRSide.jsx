@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import UserLayout from '../Components/UserLayout';
-import axios from 'axios';
 import RestaurantLayout from '../Components/RestaurantLayout';
 
 function DonationRSide() {
@@ -13,11 +11,9 @@ function DonationRSide() {
     const code = queryParams.get('code');
     const donationId = queryParams.get('id');
 
-
-
-
-
-
+       
+       
+       
     return (
         <div>
             <RestaurantLayout />

@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
-import Layout from "./Layout";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import Layout from "../../Components/Layout";
+
 
 function RegistrationForm() {
     const nameRef = useRef();
@@ -50,7 +51,7 @@ function RegistrationForm() {
             return;
         }
 
-        alert(`Name: ${nameRef.current.value}, Email: ${emailRef.current.value}, password: ${passwordRef.current.value}, ${formData.business}, ${formData.user}`);
+        
 
         try {
 
@@ -61,7 +62,9 @@ function RegistrationForm() {
                     password: passwordRef.current.value,
                    userType: "BUSINESS"
                 };
+                
 
+                
                 
            const RestPost =  await axios.post(`http://localhost:8080/Restaurant/AddUser`, RestData);
             
@@ -76,7 +79,7 @@ function RegistrationForm() {
             sessionStorage.setItem("restaurantEmail", emailRef.current.value);
 
             alert("Registered successfully.");
-            navigate('/RHomePage');
+            navigate('/SignInHome');
             
         }
             }
@@ -100,7 +103,7 @@ function RegistrationForm() {
                     sessionStorage.setItem("idUser",idUser);
                     sessionStorage.setItem("userEmail", emailRef.current.value);
                     alert("Registered successfully.");
-                    navigate('/UHomePage');
+                    navigate('/SignInHome');
                 }
                 }
 

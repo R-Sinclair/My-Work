@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
-import Layout from "./Layout";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import Layout from "../../Components/Layout";
 
 function LoginPage() {
     const emailRef = useRef();
@@ -35,7 +35,7 @@ function LoginPage() {
                 sessionStorage.setItem("idUser",idUser);
                 sessionStorage.setItem("userEmail", emailRef.current.value);
 
-                navigate('/UHomePage');
+                navigate('/SignInHome');
                 return;
             }
         } catch (error) {
@@ -59,7 +59,7 @@ function LoginPage() {
                 sessionStorage.setItem("restaurantEmail", emailRef.current.value);
 
                
-                navigate('/RHomePage');
+                navigate('/SignInHome');
                 return;
             }
         } catch (error) {

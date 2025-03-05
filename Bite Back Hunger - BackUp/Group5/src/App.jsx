@@ -2,21 +2,27 @@
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Home/Home';
-import LoginPage from './Components/LoginPage';
-import RegistrationForm from './Components/RegistrationForm';
+import LoginPage from './SignUp/Login/LoginPage';
+import RegistrationForm from './SignUp/Login/RegistrationForm';
 import RestaurantDonate from './Donations/RestaurantDonate';
-import UserLayout from './Components/UserLayout';
-import UHomePage from './Components/UHomePage';
-import RHomePage from './Components/RHomePage';
+import UHomePage from './Pages/UHomePage';
+import RHomePage from './Pages/RHomePage';
 import UserDonate from './Donations/UserDonate';
 import DonationRSide from './Donations/DonationRSide';
 import DonationUSide from './Donations/DonationUSide';
-import ReportPage from './Components/ReportPage';
+import RewardPage from './Pages/lin reward page';
+import ReportPage from './Pages/new-report-page - faisa';
+import SignInHome from './Home/SignInHome';
+
+
+
 
 
 
 
   function App() {
+
+   
     return (
       
       
@@ -33,7 +39,10 @@ import ReportPage from './Components/ReportPage';
           <Route path={'/RHomePage'} element={<RHomePage/>}></Route>
           <Route path={'/DonationRSide'} element={<DonationRSide/>}></Route>
           <Route path={'/DonationUSide'} element={<DonationUSide/>}></Route>
-          <Route path={'/Reportpage'} element={<ReportPage/>}></Route>
+          <Route path={'/Reward'} element={<RewardPage/>}></Route>
+          <Route path={'/Report'} element={<ReportPage/>}></Route>
+          <Route path={'/SignInHome'} element={<SignInHome/>}></Route>
+   
           
           
          

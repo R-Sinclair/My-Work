@@ -1,6 +1,5 @@
 import React from "react";
-import { Navigate } from "react-router";
-import UserLayout from "./UserLayout";
+import UserLayout from "../Components/UserLayout";
 
 
 function UHomePage()

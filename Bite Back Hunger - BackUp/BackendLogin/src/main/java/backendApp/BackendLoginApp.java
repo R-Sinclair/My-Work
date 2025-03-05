@@ -33,6 +33,7 @@ public class BackendLoginApp {
 				registry.addMapping("/**")
 				.allowedMethods("GET","POST","PUT","DELETE","PATCH")
 				.allowedOrigins("http://localhost:5173");
+				
 			}
 		};
 	}

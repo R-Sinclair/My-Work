@@ -13,8 +13,7 @@ function DonationUSide() {
     const donationId = parseInt(queryParams.get('id'), 10);
 
     const Uid = sessionStorage.getItem("idUser");
-
-
+    const { setNavigateHome } = useNavigation();  
    
 
     const HandleSubmit = async () => {
@@ -46,14 +45,8 @@ function DonationUSide() {
                 const pos = await axios.post('http://localhost:8080/Donations/AddDonations', dataToSend);// once report page made post to that database
                 alert('Donation completed');
                 navigate('/UserDonate');
-            
-            
-            
-     
+                return true;
 
-
-            
-        
             
     };
 
