@@ -11,6 +11,7 @@ function ReportPage() {
     const wrongOrderRef = useRef();
     const otherRef = useRef();
     const descriptionRef = useRef();
+    const donationRef = useRef();
     const navigate = useNavigate();
 
     const [errorMessage, setErrorMessage] = useState("");
@@ -30,10 +31,14 @@ function ReportPage() {
             setErrorMessage("Please fill in a description.");
             return;
         }
+        if (!donationRef.current.value){
+            alert('enter donationID given ')
+        }
     
         const reportData = {
             issueType: selectedIssues.join(", "),
             description: descriptionRef.current.value,
+            donationId: donationRef.current.value 
         };
     
         try {
@@ -69,6 +74,16 @@ function ReportPage() {
                     <label style={styles.checkboxLabel}>
                         Other <input type="checkbox" ref={otherRef} style={styles.checkbox} />
                     </label>
+                    <label htmlFor="donationID" className="donationID">DonationID</label>
+                                    <input
+                                        name="donationID"
+                                        type="text"
+                                        id="donationID"
+                                        ref={donationRef}
+                                        required
+                                        className="donationID"
+                                        placeholder="Enter DonationID"
+                                        style={styles.DonationID} />
                 </div>
 
                 <div style={styles.field}>
@@ -107,6 +122,11 @@ const styles = {
         flexDirection: "column",
         alignItems: "start",
         marginBottom: "15px",
+    },
+    DonationID:{
+        display:"flex",
+        height:"20px",
+
     },
     checkboxLabel: {
         display: "flex",

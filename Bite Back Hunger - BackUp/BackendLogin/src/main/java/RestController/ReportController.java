@@ -1,11 +1,15 @@
 package RestController;
 
+import Tables.Donation;
 import Tables.Report;
 import repository.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/reports")
@@ -15,9 +19,14 @@ public class ReportController {
     @Autowired
     private ReportRepository reportRepository;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Report> getAllReports() {
         return reportRepository.findAll();
+    }
+    @GetMapping("/donationid")
+    public List<Report> getReportByDonationId(@PathVariable(value = "donationId") String donationId) {
+		return reportRepository.findReportByDonationId(donationId);
+        
     }
 
     @PostMapping

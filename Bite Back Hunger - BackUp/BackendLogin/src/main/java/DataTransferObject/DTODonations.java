@@ -12,7 +12,6 @@ public class DTODonations {
     public Completed completed;
     public String name;
 
-    // Constructor with simplified logic
     public DTODonations(int DonationId, Long RestaurantId, int Code, String Location, Long UserId, Boolean isCompleted, String name) {
         super();
         this.DonationId = DonationId;

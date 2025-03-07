@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import UserLayout from "../Components/UserLayout";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import './UserDonate.css';
 
 export default function UserDonate() {
    const [donations, setDonations] = useState([]);
    const [isLoading, setIsLoading] = useState(true);
    const [error, setError] = useState(null);
+
+   
 
    useEffect(() => {
     const fetchDonations = async () => {
@@ -27,11 +30,15 @@ export default function UserDonate() {
    }, []);
 
    const donationsGroupedByName = donations.reduce((acc, donation) => {
-     const { name } = donation;
+     const { name , completedTask, } = donation;
      if (!acc[name]) {
        acc[name] = [];
      }
      acc[name].push(donation);
+
+     if (completedTask === 'COMPLETEDTASK') {
+        acc[name] = acc[name].filter(d => d !== donation);
+     }
      return acc;
    }, {});
 

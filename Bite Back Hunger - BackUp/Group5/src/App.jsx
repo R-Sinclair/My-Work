@@ -13,6 +13,7 @@ import DonationUSide from './Donations/DonationUSide';
 import RewardPage from './Pages/lin reward page';
 import ReportPage from './Pages/new-report-page - faisa';
 import SignInHome from './Home/SignInHome';
+import Tasks from './Components/Tasks';
 
 
 
@@ -42,6 +43,7 @@ import SignInHome from './Home/SignInHome';
           <Route path={'/Reward'} element={<RewardPage/>}></Route>
           <Route path={'/Report'} element={<ReportPage/>}></Route>
           <Route path={'/SignInHome'} element={<SignInHome/>}></Route>
+          <Route path={'/Tasks'} element={<Tasks/>}></Route>
    
           
           

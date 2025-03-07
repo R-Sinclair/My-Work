@@ -66,6 +66,8 @@
     <version>1.18.30</version> <!-- Check for latest version -->
     <scope>provided</scope>
 </dependency>
+
+		<!--spring security here-->
 	</dependencies>
 
 	<build>

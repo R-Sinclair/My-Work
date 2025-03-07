@@ -10,16 +10,21 @@ public class Report {
     private Long id;
     private String issueType;
     private String description;
+    private String donationId;
 
     public Report() {}
 
-    public Report(String issueType, String description) {
+    public Report(String issueType, String description, String donationId) {
         this.issueType = issueType;
         this.description = description;
+        this.donationId = donationId;
     }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+    
+    public String getDonationId() { return donationId; }
+    public void setDonationId(String donationId) { this.donationId = donationId; }
 
     public String getIssueType() { return issueType; }
     public void setIssueType(String issueType) { this.issueType = issueType; }

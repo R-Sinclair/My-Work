@@ -10,6 +10,7 @@ function RestaurantDonate() {
     const locationRef = useRef();
     const emailRef = useRef();
     const cityRef = useRef();
+    const nameRef = useRef();
     const postCodeRef = useRef();
     const [isChecked, setIsChecked] = useState(false);  
     const [isSubmitted, setIsSubmitted] = useState(false);  
@@ -18,6 +19,7 @@ function RestaurantDonate() {
 
     const [formData, setFormData] = useState({
                     email: '',
+                    name:'',
                     location: '',
                     city: '',
                     postCode:'',
@@ -38,12 +40,16 @@ function RestaurantDonate() {
         const email = emailRef.current.value
 
         if (!donateRef.current.checked) {
-            alert("You must click here to donat");
+            alert("You must click here to donate");
             return;
         }
 
        else if (formData.location === '') {
             alert("Please add a location");
+            return;
+        }
+        else if (formData.name === '') {
+            alert("Please add the name of the charity/foodbank");
             return;
         }
 
@@ -63,6 +69,8 @@ function RestaurantDonate() {
 
 
             try {
+
+                
               
                 const response = await axios.get(`http://localhost:8080/Restaurant/email/${email}`);
                 const restaurantId = response.data
@@ -88,6 +96,7 @@ function RestaurantDonate() {
                 const responsePost = await axios.post('http://localhost:8080/Donations/AddDonations', dataToSend);
                 
                 if (responsePost.status === 201) {
+                    localStorage.setItem("F/Cname",nameRef.current.value)
                     alert("Donation Sent.");
                     navigate(`/DonationRSide?donationName=${name}
                         &location=${dataToSend.location}&code=${dataToSend.code}&id=${DonationId}`);
@@ -151,6 +160,19 @@ function RestaurantDonate() {
                                     className="donate-location-input"
                                     placeholder="Enter email" />
                             </div><div>
+
+                            <label htmlFor="Name" className="donate-location-label">Name of foodbank/charity:</label>
+                                    <input
+                                        name="name"
+                                        type="text"
+                                        id="name"
+                                        value={formData.name}
+                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                        ref={nameRef}
+                                        required
+                                        className="donate-location-input"
+                                        placeholder="Enter charity/foodbank name" />
+
 
                                     <label htmlFor="Location" className="donate-location-label">Location of foodbank/charity:</label>
                                     <input

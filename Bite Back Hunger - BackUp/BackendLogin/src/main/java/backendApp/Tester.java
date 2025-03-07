@@ -1,7 +1,10 @@
 package backendApp;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
 import Tables.Completed;
@@ -11,12 +14,19 @@ import Tables.UserTable;
 import repository.DonationRepo;
 import repository.RestaurantRepo;
 import repository.UserRepo;
+import services.emailService;
 
 
 @Component
 public class Tester implements CommandLineRunner{
 	
-	 
+
+    @Autowired
+    private emailService emailService;
+
+    @Autowired
+    private JavaMailSender mailSender;
+    
 	private UserRepo userRepo;
 	private RestaurantRepo restaurantRepo;
 	private DonationRepo donationRepo;
@@ -39,6 +49,17 @@ public class Tester implements CommandLineRunner{
 		restaurantRepo.deleteAll();
 		donationRepo.deleteAll();
 	
+		
+	/*	   String toEmail = "reuben.sinclair11@gmail.com";
+	        String subject = "Test Subject";
+	        String body = "Test Body";
+	        try {
+	            emailService.sendEmail(toEmail, subject, body);
+	            System.out.println("Email sent successfully.");
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	           
+	        }*/
 		
 		
 		
