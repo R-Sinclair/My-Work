@@ -33,7 +33,7 @@ export default function Layout() {
           </div>
         )}
       </div>
-      <a href="#news" style={styles.navLink}>News</a>
+      <Link to='/Charities' style={styles.navLink}>Charities/Foodbanks</Link>
       <a href="#find-shelters" style={styles.navLink}>Find Shelters</a>
       <input type="text" style={styles.searchBar} placeholder="Search..." />
     </div>

@@ -39,7 +39,9 @@ export default function RestaurantLayout() {
         )}
       </div>
        <Link to='/Report' style={styles.navLink}>Report user</Link>
+        <Link to='/Charities' style={styles.navLink}>Charities/Foodbanks</Link>
       <Link to='/RestaurantDonate' style={styles.navLink}>Donate</Link>
+      <Link to='/Map' style={styles.navLink}>Shelter Locations & more</Link>
       <input type="text" style={styles.searchBar} placeholder="Search..." />
 <div>
 <u

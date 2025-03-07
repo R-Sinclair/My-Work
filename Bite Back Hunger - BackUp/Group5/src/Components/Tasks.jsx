@@ -8,13 +8,7 @@ function Tasks (){
   const [map, setMap] = useState(null); // State to store map instance
 
   // Handle search when the button is clicked
-  const emailData = {
-    toEmail:"reuben.sinclair11@gmail.com",
-    subject:"Hey",
-    text:"hey"+3445
-  };
-
-  const HandleSubmit = axios.post(`http://localhost:8080/email/send`, emailData)
+ 
   const handleSearch = async () => {
     const apiKey = 'AIzaSyALTuqkqvxEDo-UAiv61dQFAIPe_5qLXvk'; // Replace with your actual Google Maps API Key
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
@@ -88,7 +82,6 @@ function Tasks (){
       <div ref={mapRef} style={{ height: '500px', width: '100%' }}></div>
 
 
-      <button onClick={HandleSubmit}>Button</button>
     </div>
 
   

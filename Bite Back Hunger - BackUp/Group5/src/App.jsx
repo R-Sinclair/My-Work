@@ -14,6 +14,8 @@ import RewardPage from './Pages/lin reward page';
 import ReportPage from './Pages/new-report-page - faisa';
 import SignInHome from './Home/SignInHome';
 import Tasks from './Components/Tasks';
+import Charities from './Pages/ikhra-foodbanks';
+import KarimMap from './karim wrk/Karim-Map';
 
 
 
@@ -44,6 +46,9 @@ import Tasks from './Components/Tasks';
           <Route path={'/Report'} element={<ReportPage/>}></Route>
           <Route path={'/SignInHome'} element={<SignInHome/>}></Route>
           <Route path={'/Tasks'} element={<Tasks/>}></Route>
+          <Route path={'/Charities'} element={<Charities/>}></Route>
+          <Route path={'/Map'} element={<KarimMap/>}></Route>
+          
    
           
           

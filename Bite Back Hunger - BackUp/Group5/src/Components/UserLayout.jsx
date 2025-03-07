@@ -40,7 +40,9 @@ export default function UserLayout() {
         )}
       </div>
       <Link to='/Reward' style={styles.navLink}>rewards</Link>
+       <Link to='/Charities' style={styles.navLink}>Charities/Foodbanks</Link>
       <Link to='/UserDonate' style={styles.navLink}>Donate Assist</Link>
+       <Link to='/Map' style={styles.navLink}>Shelter Locations & more</Link>
       <input type="text" style={styles.searchBar} placeholder="Search..." />
       <div>
       <u
