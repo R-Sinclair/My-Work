@@ -77,7 +77,12 @@ function RegistrationForm() {
 
             sessionStorage.setItem("restaurantId", idRestaurant);
             sessionStorage.setItem("restaurantEmail", emailRef.current.value);
-
+            const emailData = {
+                toEmail: sessionStorage.getItem("restaurantEmail"),
+                subject: "Restaurant Registration complete",
+                text: "thank you for registering your business with us, we hope you have a great experience",
+              };
+               axios.post('http://localhost:8080/email/send', emailData)
             alert("Registered successfully.");
             navigate('/SignInHome');
             
@@ -102,6 +107,14 @@ function RegistrationForm() {
 
                     sessionStorage.setItem("idUser",idUser);
                     sessionStorage.setItem("userEmail", emailRef.current.value);
+
+                    const emailData = {
+                        toEmail: sessionStorage.getItem("userEmail"),
+                        subject: "User Registration complete",
+                        text: "thank you for registering an account with us, we hope you have a great experience",
+                      };
+                       axios.post('http://localhost:8080/email/send', emailData)
+
                     alert("Registered successfully.");
                     navigate('/SignInHome');
                 }

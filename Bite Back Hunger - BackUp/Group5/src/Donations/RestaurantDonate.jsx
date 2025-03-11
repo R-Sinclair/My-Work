@@ -148,7 +148,7 @@ function RestaurantDonate() {
 
                         {isChecked && (
                             <><div>
-                                <label htmlFor="email" className="email">Email:</label>
+                                <label htmlFor="email" className="donate-location-label">Your Email:</label>
                                 <input
                                     name="email"
                                     type="email"

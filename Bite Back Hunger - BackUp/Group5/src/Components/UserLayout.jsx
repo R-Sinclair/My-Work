@@ -29,7 +29,7 @@ export default function UserLayout() {
         style={styles.dropdown}
         onMouseEnter={handleMouseEnter} 
         onMouseLeave={handleMouseLeave} 
-      >
+      > 
         <a href="#" style={styles.dropbtn}>Support Us</a>
         
         {isDropdownOpen && (
@@ -39,11 +39,12 @@ export default function UserLayout() {
           </div>
         )}
       </div>
+      <Link to='/AboutUs' style={styles.navLink}>About Us</Link>
       <Link to='/Reward' style={styles.navLink}>rewards</Link>
        <Link to='/Charities' style={styles.navLink}>Charities/Foodbanks</Link>
       <Link to='/UserDonate' style={styles.navLink}>Donate Assist</Link>
        <Link to='/Map' style={styles.navLink}>Shelter Locations & more</Link>
-      <input type="text" style={styles.searchBar} placeholder="Search..." />
+    
       <div>
       <u
 onClick={signOut}

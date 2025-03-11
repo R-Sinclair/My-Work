@@ -7,6 +7,7 @@ function RHomePage()
     return(
         <div>
         <RestaurantLayout/>
+        
 
 
 

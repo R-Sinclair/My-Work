@@ -44,7 +44,7 @@ function ReportPage() {
         try {
             const response = await createReport(reportData);
             alert('report sent');
-            navigate('/RHomePage')
+            navigate('/SignInHome')
         } catch (error) {
             setErrorMessage("Failed to submit report. Try again.");
         }

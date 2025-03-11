@@ -57,8 +57,6 @@ function LoginPage() {
                
                 sessionStorage.setItem("restaurantId", idRestaurant);
                 sessionStorage.setItem("restaurantEmail", emailRef.current.value);
-
-               
                 navigate('/SignInHome');
                 return;
             }

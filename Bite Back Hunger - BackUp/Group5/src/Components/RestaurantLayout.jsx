@@ -28,7 +28,7 @@ export default function RestaurantLayout() {
         style={styles.dropdown}
         onMouseEnter={handleMouseEnter} 
         onMouseLeave={handleMouseLeave} 
-      >
+      > 
         <a href="#" style={styles.dropbtn}>Support Us</a>
         
         {isDropdownOpen && (
@@ -38,11 +38,12 @@ export default function RestaurantLayout() {
           </div>
         )}
       </div>
+      <Link to='/AboutUs' style={styles.navLink}>About Us</Link>
        <Link to='/Report' style={styles.navLink}>Report user</Link>
         <Link to='/Charities' style={styles.navLink}>Charities/Foodbanks</Link>
       <Link to='/RestaurantDonate' style={styles.navLink}>Donate</Link>
       <Link to='/Map' style={styles.navLink}>Shelter Locations & more</Link>
-      <input type="text" style={styles.searchBar} placeholder="Search..." />
+     
 <div>
 <u
 onClick={signOut}

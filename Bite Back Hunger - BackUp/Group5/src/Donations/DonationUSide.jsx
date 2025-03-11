@@ -58,7 +58,7 @@ function DonationUSide() {
           };
            axios.post('http://localhost:8080/email/send', emailData)
         alert('Donation completed');
-        navigate('/UserDonate');
+        navigate('/SignInHome');
 
   }
 

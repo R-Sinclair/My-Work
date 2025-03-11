@@ -12,20 +12,32 @@ import twitterIcon from './twitter.png';
 import facebookIcon from './facebook.jpg';
 import instaIcon from './insta.jpg';
 import linkedinIcon from './linkedin.webp';
+import axios from "axios";
 
 function SignInHome() {
     const [signInUser, setSignInUser] = useState("");
     const [signInRestaurant, setSignInRestaurant] = useState("");
+    const [name, setName] = useState("");
   
-    const fetchSignedInUser = () => {
+    const fetchSignedInUser = async () => {
       const UI = sessionStorage.getItem("userEmail");
+      const N = await axios.get(`http://localhost:8080/NormalUsers/findByEmail/${UI}`)
+      const Data = N.data
+      const got = Data.name
+      setName(got);
       setSignInUser(UI);
     };
   
-    const fetchSignedInRestaurant = () => {
+    const fetchSignedInRestaurant = async () => {
       const RI = sessionStorage.getItem("restaurantEmail");
+      const N = await axios.get(`http://localhost:8080/Restaurant/email/${RI}`)
+      const Data = N.data
+      const got = Data.name
+      setName(got);
       setSignInRestaurant(RI);
     };
+
+    
   
     useEffect(() => {
       fetchSignedInUser();
@@ -41,6 +53,13 @@ function SignInHome() {
         ) : (
           <Layout />
         )}
+        <div>
+         <h1>
+
+          Welcome back {name}
+         </h1>
+
+        </div>
   
         <div className="container">
           <h1>Help Fight Food Insecurity</h1>
