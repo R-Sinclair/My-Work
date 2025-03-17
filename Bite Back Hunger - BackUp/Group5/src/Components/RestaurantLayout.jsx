@@ -33,8 +33,8 @@ export default function RestaurantLayout() {
         
         {isDropdownOpen && (
           <div style={styles.dropdownContent}>
-            <a href="#donate-food" style={styles.dropdownItem}>Donate Food</a>
-            <a href="#donate-money" style={styles.dropdownItem}>Donate Money</a>
+            <a href="/SignInHome/#donate-food" style={styles.dropdownItem}>Donate Food</a>
+            <a href="/SignInHome/#donate-money" style={styles.dropdownItem}>Donate Money</a>
           </div>
         )}
       </div>

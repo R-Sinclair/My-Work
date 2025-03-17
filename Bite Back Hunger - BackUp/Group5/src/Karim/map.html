@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Maps - Food Assistance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+        }
+        #map {
+            height: 500px; /* Larger map */
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 1000px;
+        }
+        #controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #categoryFilter, #searchBox {
+            padding: 10px;
+            margin: 10px;
+            width: 250px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #888;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .info-window-content {
+            font-size: 16px;
+        }
+        .info-window-content strong {
+            color: #2e7d32;
+        }
+    </style>
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALTuqkqvxEDo-UAiv61dQFAIPe_5qLXvk&callback=initMap" async defer></script>
+</head>
+<body>
+
+    <!-- Controls for searching and filtering -->
+    <div id="controls">
+        <input type="text" id="searchBox" placeholder="Search for a location...">
+        <select id="categoryFilter">
+            <option value="all">Show All</option>
+            <option value="shelter">Shelters</option>
+            <option value="restaurant">Restaurants</option>
+            <option value="foodbank">Food Banks</option>
+            <option value="charity">Charities</option>
+        </select>
+        <button onclick="filterMarkers()">Apply Filter</button>
+        <button onclick="getUserLocation()">Use My Location</button>
+    </div>
+
+    <!-- Map container -->
+    <div id="map"></div>
+
+    <script>
+        let map;
+        let markers = [];
+        let userLocationMarker = null;
+
+        // Example real data (replace these with your actual data)
+        const locations = [
+    // Food Banks in London
+    { 
+        name: "The Trussell Trust – Food Bank", 
+        lat: 51.4531, 
+        lng: -0.9750, 
+        type: "foodbank", 
+        address: "1-2 The Triangle, Bristol, BS1 5DJ, UK", 
+        googleMapsUrl: "https://www.google.com/maps?q=51.4531,-0.9750" 
+    },
+    { 
+        name: "Hackney Food Bank", 
+        lat: 51.5484, 
+        lng: -0.0591, 
+        type: "foodbank", 
+        address: "105-107 Clarence Rd, Hackney, London E5 8EE, UK", 
+        googleMapsUrl: "https://www.google.com/maps?q=51.5484,-0.0591" 
+    },
+    // Shelters in London
+    { 
+        name: "Crisis Skylight Centre", 
+        lat: 51.5166, 
+        lng: -0.0711, 
+        type: "shelter", 
+        address: "66 Commercial St, London E1 6LT, UK", 
+        googleMapsUrl: "https://www.google.com/maps?q=51.5166,-0.0711" 
+    },
+    { 
+        name: "The Whitechapel Centre", 
+        lat: 51.5156, 
+        lng: -0.0676, 
+        type: "shelter", 
+        address: "211 Whitechapel Rd, London E1 1DU, UK", 
+        googleMapsUrl: "https://www.google.com/maps?q=51.5156,-0.0676" 
+    },
+    // Charities in London
+    { 
+        name: "The Salvation Army", 
+        lat: 51.4970, 
+        lng: -0.0990, 
+        type: "charity", 
+        address: "101 Newington Causeway, London SE1 6BN, UK", 
+        googleMapsUrl: "https://www.google.com/maps?q=51.4970,-0.0990" 
+    },
+    { 
+        name: "London Homeless Shelter", 
+        lat: 51.4933, 
+        lng: -0.0927, 
+        type: "charity", 
+        address: "25 London Road, London SE1 6NN, UK", 
+        googleMapsUrl: "https://www.google.com/maps?q=51.4933,-0.0927" 
+    },
+    // Restaurants in London
+    { 
+        name: "Dishoom Shoreditch", 
+        lat: 51.5267, 
+        lng: -0.0754, 
+        type: "restaurant", 
+        address: "7 Boundary St, Shoreditch, London E2 7JE, UK", 
+        googleMapsUrl: "https://www.google.com/maps?q=51.5267,-0.0754" 
+    },
+    { 
+        name: "The Ledbury", 
+        lat: 51.5125, 
+        lng: -0.1992, 
+        type: "restaurant", 
+        address: "127 Ledbury Rd, Notting Hill, London W11 2AQ, UK", 
+        googleMapsUrl: "https://www.google.com/maps?q=51.5125,-0.1992" 
+    }
+];
+
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 51.5074, lng: -0.1278 }, // Default to London
+                zoom: 12,
+                zoomControl: true,
+                streetViewControl: false,
+                mapTypeControl: true
+            });
+
+            // Add markers to the map
+            locations.forEach((location) => {
+                const marker = new google.maps.Marker({
+                    position: { lat: location.lat, lng: location.lng },
+                    map: map,
+                    title: location.name,
+                    type: location.type,
+                });
+
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `<div class="info-window-content"><strong>${location.name}</strong><br>Address: ${location.address}<br><a href="${location.googleMapsUrl}" target="_blank">Get Directions</a></div>`,
+                });
+
+                marker.addListener("click", () => {
+                    infoWindow.open(map, marker);
+                });
+
+                markers.push(marker);
+            });
+        }
+
+        // Filter markers based on selected category
+        function filterMarkers() {
+            const selectedCategory = document.getElementById("categoryFilter").value;
+            markers.forEach(marker => {
+                if (selectedCategory === "all" || marker.type === selectedCategory) {
+                    marker.setMap(map);
+                } else {
+                    marker.setMap(null);
+                }
+            });
+        }
+
+        // Function to get user's location and center the map
+        function getUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const userLat = position.coords.latitude;
+                    const userLng = position.coords.longitude;
+                    const userLocation = new google.maps.LatLng(userLat, userLng);
+
+                    if (userLocationMarker) {
+                        userLocationMarker.setMap(null); // Remove existing marker
+                    }
+
+                    userLocationMarker = new google.maps.Marker({
+                        position: userLocation,
+                        map: map,
+                        title: "Your Location",
+                    });
+
+                    map.setCenter(userLocation);
+                    map.setZoom(14);
+                }, () => {
+                    alert("Geolocation service failed.");
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+    </script>
+
+</body>
+</html>

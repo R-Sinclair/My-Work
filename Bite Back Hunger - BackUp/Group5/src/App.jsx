@@ -15,8 +15,9 @@ import ReportPage from './Pages/new-report-page - faisa';
 import SignInHome from './Home/SignInHome';
 import Tasks from './Components/Tasks';
 import Charities from './Pages/ikhra-foodbanks';
-import KarimMap from './karim wrk/Karim-Map';
 import AboutUs from './Pages/AboutUs';
+import ProfilePage from './Pages/ProfilePage-ikhra';
+import Maps from './Karim/map';
 
 
 
@@ -48,9 +49,9 @@ import AboutUs from './Pages/AboutUs';
           <Route path={'/SignInHome'} element={<SignInHome/>}></Route>
           <Route path={'/Tasks'} element={<Tasks/>}></Route>
           <Route path={'/Charities'} element={<Charities/>}></Route>
-          <Route path={'/Map'} element={<KarimMap/>}></Route>
+          <Route path={'/Map'} element={<Maps/>}></Route>
           <Route path={'/AboutUs'} element={<AboutUs/>}></Route>
-          
+          <Route path={'/Profile'} element={<ProfilePage/>}></Route>
           
    
           

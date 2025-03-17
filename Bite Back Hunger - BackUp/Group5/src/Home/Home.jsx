@@ -91,8 +91,8 @@ function Home () {
         <h3>Quick Links:</h3>
         <div className="quick-links">
           <a href="https://www.trussell.org.uk/emergency-food" className="quick-button" style={{ background: 'green', color: 'white', padding: '10px 20px', borderRadius: '20px', textDecoration: 'none' }}>Get emergency food</a>
-          <a href="#donate-money" className="quick-button" style={{ background: 'orange', color: 'white', padding: '10px 20px', borderRadius: '20px', textDecoration: 'none' }}>£ Donate</a>
-          <a href="#donate-food" className="quick-button" style={{ border: '2px solid green', color: 'black', padding: '10px 20px', borderRadius: '20px', textDecoration: 'none' }}>Donate food</a>
+          <a href="/#donate-money" className="quick-button" style={{ background: 'orange', color: 'white', padding: '10px 20px', borderRadius: '20px', textDecoration: 'none' }}>£ Donate</a>
+          <a href="/#donate-food" className="quick-button" style={{ border: '2px solid green', color: 'black', padding: '10px 20px', borderRadius: '20px', textDecoration: 'none' }}>Donate food</a>
         </div>
         <h3>Follow Us:</h3>
         <div className="social-links">
