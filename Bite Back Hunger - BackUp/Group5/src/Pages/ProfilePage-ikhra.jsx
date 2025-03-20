@@ -1,41 +1,92 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import UserLayout from '../Components/UserLayout';
+import RestaurantLayout from '../Components/RestaurantLayout';
+import Layout from '../Components/Layout';
+import { useNavigate } from 'react-router';
+import axios from 'axios';  
+import pic from '../picture_logo/BiteBackHunger.png';
 
-const ProfilePage = () => {
-    const usernameRef = useRef('');
-    const emailRef = useRef('');
-    const phoneRef = useRef('');
-    const passwordRef = useRef('');
-    const profileImageRef = useRef('default-avatar.png');
-    const profileImageElement = useRef(null);
+function ProfilePage() {
+    const navigate = useNavigate();
+    const [signInUser, setSignInUser] = useState("");
+    const [signInRestaurant, setSignInRestaurant] = useState("");
+    const nameRef = useRef("");
+    const emailRef = useRef("");
+    const passwordRef = useRef("");
+    const [rotateAngle, setRotateAngle] = useState(0);
+    const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                profileImageRef.current = e.target.result;
-                if (profileImageElement.current) {
-                    profileImageElement.current.src = e.target.result;
+    const fetchSignedInUser = () => {
+        const UI = sessionStorage.getItem("userEmail");
+        setSignInUser(UI);
+    };
+
+    const fetchSignedInRestaurant = () => {
+        const RI = sessionStorage.getItem("restaurantEmail");
+        setSignInRestaurant(RI);
+    };
+
+    useEffect(() => {
+        fetchSignedInUser();
+        fetchSignedInRestaurant();
+    }, []);
+
+    useEffect(() => {
+        const rotateImage = () => {
+            setRotateAngle(prevAngle => (prevAngle + 1) % 360); 
+            requestAnimationFrame(rotateImage); 
+        };
+
+        requestAnimationFrame(rotateImage); 
+
+        return () => cancelAnimationFrame(rotateImage);
+    }, []);
+
+    const handleSave = async () => {
+        if (!passwordRef.current.value || !nameRef.current.value || !emailRef.current.value ) {
+            alert("Information missing.");
+            return;
+        }
+        else if ( !emailRef.current.value.match(mailformat)) {
+            alert("Please add an email and make sure it's correct");
+            
+        }
+
+        if (signInUser &&emailRef.current.value.match(mailformat)) {
+            try {
+                const userRData = {
+                    name: nameRef.current.value,
+                    email: emailRef.current.value,
+                    password: passwordRef.current.value
+                };
+                const NUpdate = await axios.put(`http://localhost:8080/NormalUsers/Update/${signInUser}`, userRData);
+                if (NUpdate.status === 200) {
+                    sessionStorage.setItem("userEmail", emailRef.current.value);
+                    alert("Details updated");
+                    navigate('/SignInHome');
                 }
-            };
-            reader.readAsDataURL(file);
+            } catch (error) {
+                alert('Not able to send data to users');
+            }
+        } else if (signInRestaurant&&emailRef.current.value.match(mailformat)) {
+            try {
+                const userData = {
+                    name: nameRef.current.value,
+                    email: emailRef.current.value,
+                    password: passwordRef.current.value
+                };
+                const RUpdate = await axios.put(`http://localhost:8080/Restaurant/Update/${signInRestaurant}`, userData);
+                if (RUpdate.status === 200) {
+                    sessionStorage.setItem("restaurantEmail", emailRef.current.value);
+                    alert("Details updated");
+                    navigate('/SignInHome');
+                }
+            } catch (error) {
+                alert('Not able to send data to restaurant');
+            }
         }
     };
 
-    // Save data
-    const handleSave = () => {
-        const userData = {
-            username: usernameRef.current.value,
-            email: emailRef.current.value,
-            phone: phoneRef.current.value,
-            password: passwordRef.current.value,
-            profileImage: profileImageRef.current
-        };
-        console.log('Profile Updated:', userData);
-        alert('Profile Updated!');
-    };
-
-    // Inline CSS Styles
     const styles = {
         container: {
             width: '60%',
@@ -105,71 +156,55 @@ const ProfilePage = () => {
     };
 
     return (
-        <div style={styles.container}>
-            <div style={styles.header}>
-                <div style={styles.profileHeaderContainer}>
-                    <img
-                        ref={profileImageElement}
-                        src={profileImageRef.current}
-                        alt="Profile"
-                        style={styles.profileImage}
-                    />
-                    {profileImageRef.current === 'default-avatar.png' && (
-                        <div style={styles.profilePictureText}>
-                            Insert Profile Picture
-                        </div>
-                    )}
-                </div>
+        <div>{signInUser ? (
+            <UserLayout />
+        ) : signInRestaurant ? (
+            <RestaurantLayout />
+        ) : (
+            <Layout />
+        )}
 
-                <input
-                    type="file"
-                    id="imageUpload"
-                    style={{ display: 'none' }}
-                    onChange={handleImageChange}
-                />
-                <p
-                    style={{ color: 'white', fontWeight: 'bold', cursor: 'pointer' }}
-                    onClick={() => document.getElementById('imageUpload').click()}
-                >
-                    Change Picture
-                </p>
-            </div>
-
-            <div style={styles.formSection}>
-                <input
-                    ref={usernameRef}
-                    type="text"
-                    placeholder="name"
-                    style={styles.input}
-                />
-                <input
-                    ref={emailRef}
-                    type="email"
-                    placeholder="Email"
-                    style={styles.input}
-                />
-                <input
-                    ref={phoneRef}
-                    type="text"
-                    placeholder="Phone Number"
-                    style={styles.input}
-                />
-                <input
-                    ref={passwordRef}
-                    type="password"
-                    placeholder="Password"
-                    style={styles.input}
-                />
-                <button
-                    style={styles.updateBtn}
-                    onMouseEnter={(e) => (e.target.style.backgroundColor = '#333')}
-                    onMouseLeave={(e) => (e.target.style.backgroundColor = 'rgb(11, 78, 11)')}
-                    onClick={handleSave}
-                >
-                    Update
-                </button>
-            </div>
+        <img
+            src={pic}
+            alt="Rotating"
+            style={{
+                width: '180px',          
+                height: '180px',
+                borderRadius: '20%',
+                transform: `rotate(${rotateAngle}deg)`,
+                transition: 'transform 0.3s linear',
+            }}
+        />
+        <h2><u style={styles.input}>Edit Profile details</u></h2>
+        <div style={styles.formSection}>
+            <input
+                ref={nameRef}
+                type="text"
+                placeholder="Name"
+                style={styles.input}
+            />
+            <input
+                ref={emailRef}
+                type="email"
+                placeholder="Email"
+                style={styles.input}
+            />
+            <input
+                ref={passwordRef}
+                type="password"
+                placeholder="Password"
+                style={styles.input}
+            />
+            <button
+                style={styles.updateBtn}
+                onMouseEnter={(e) => (e.target.style.backgroundColor = '#333')}
+                onMouseLeave={(e) => (e.target.style.backgroundColor = 'rgb(11, 78, 11)')}
+                onClick={handleSave}
+            >
+                Update
+            </button>
         </div>
+    </div>
     );
 };
 
