@@ -41,12 +41,10 @@ function RestaurantDonate() {
 
         if (!donateRef.current.checked) {
             alert("You must click here to donate");
-            return;
         }
 
        else if (formData.location === '') {
             alert("Please add a location");
-            return;
         }
         else if (formData.name === '') {
             alert("Please add the name of the charity/foodbank");
@@ -55,16 +53,16 @@ function RestaurantDonate() {
 
         else if (formData.city === '') {
             alert("Please add a city");
-            return;
+        
         }
         else if (formData.postCode === '') {
             alert("Please add a post code");
-            return;
+            
         }
 
        else if (email.length === 0 || !email.match(mailformat)) {
             alert("Please add an email and make sure it's correct");
-            return;
+            
         }
 
 

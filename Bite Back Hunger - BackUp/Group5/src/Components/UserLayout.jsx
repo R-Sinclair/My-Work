@@ -25,25 +25,14 @@ export default function UserLayout() {
     <div style={styles.navbar}>
       
       <Link to='/SignInHome' style={styles.navLink}>Home</Link>
-      <div 
-        style={styles.dropdown}
-        onMouseEnter={handleMouseEnter} 
-        onMouseLeave={handleMouseLeave} 
-      > 
-        <a href="#" style={styles.dropbtn}>Support Us</a>
-        
-        {isDropdownOpen && (
-          <div style={styles.dropdownContent}>
-            <a href="/SignInHome/#donate-food" style={styles.dropdownItem}>Donate Food</a>
-            <a href="/SignInHome/#donate-money" style={styles.dropdownItem}>Donate Money</a>
-          </div>
-        )}
-      </div>
+      
       <Link to='/AboutUs' style={styles.navLink}>About Us</Link>
       <Link to='/Reward' style={styles.navLink}>rewards</Link>
        <Link to='/Charities' style={styles.navLink}>Charities/Foodbanks</Link>
       <Link to='/UserDonate' style={styles.navLink}>Donate Assist</Link>
        <Link to='/Map' style={styles.navLink}>Shelter Locations & more</Link>
+             <Link to='/Profile' style={styles.navLink}>Profile</Link>
+       
     
       <div>
       <u

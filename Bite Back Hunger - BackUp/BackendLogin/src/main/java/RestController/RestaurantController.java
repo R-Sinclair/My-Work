@@ -83,17 +83,16 @@ public class RestaurantController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping ("/UpdateUserById/{id}")
-	public ResponseEntity<RestaurantTable> UpdateUserById (@PathVariable (value ="id") Long id, @RequestBody RestaurantTable NewUser) 
+    @PutMapping ("/Update/{email}")
+	public ResponseEntity<RestaurantTable> UpdateUserByEmail (@PathVariable (value ="email") String email, @RequestBody RestaurantTable NewUser) 
 	{
-		Optional<RestaurantTable> OldUser = restaurantService.findByID(id);
+		Optional<RestaurantTable> OldUser = Optional.ofNullable(restaurantService.findByEmail(email));
 		if (OldUser.isPresent())
 		{
 			RestaurantTable UpdatedUser = OldUser.get();
 			UpdatedUser.setEmail(NewUser.getEmail());
 			UpdatedUser.setName(NewUser.getName());
 			UpdatedUser.setPassword(NewUser.getPassword());
-			UpdatedUser.setUserType(NewUser.getUserType());
 			
 			RestaurantTable UserObject = restaurantService.save(UpdatedUser);
 			

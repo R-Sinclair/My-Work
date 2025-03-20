@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import DataTransferObject.DataTransfer;
@@ -82,18 +81,16 @@ public class UserController {
 			}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    @PutMapping ("/UpdateUserById/{id}")
-	public ResponseEntity<UserTable> UpdateUserById (@PathVariable (value ="id") Long id, @RequestBody UserTable NewUser) 
+    @PutMapping ("/Update/{email}")
+	public ResponseEntity<UserTable> UpdateUserByEmail (@PathVariable (value ="email") String email, @RequestBody UserTable NewUser) 
 	{
-		Optional<UserTable> OldUser = userService.findByID(id);
+		Optional<UserTable> OldUser = Optional.ofNullable(userService.findByEmail(email));
 		if (OldUser.isPresent())
 		{
 			UserTable UpdatedUser = OldUser.get();
 			UpdatedUser.setEmail(NewUser.getEmail());
 			UpdatedUser.setName(NewUser.getName());
-			UpdatedUser.setId(NewUser.getId());
 			UpdatedUser.setPassword(NewUser.getPassword());
-			UpdatedUser.setUserType(NewUser.getUserType());
 			
 			UserTable UserObject = userService.save(UpdatedUser);
 			

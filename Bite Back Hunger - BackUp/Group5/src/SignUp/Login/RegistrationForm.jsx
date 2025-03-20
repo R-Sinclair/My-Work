@@ -11,6 +11,7 @@ function RegistrationForm() {
     const retypePasswordRef = useRef();
     const agreeRef = useRef();
     const navigate = useNavigate();
+    const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
  
     const [formData, setFormData] = useState({
@@ -49,6 +50,10 @@ function RegistrationForm() {
         if (passwordRef.current.value !== retypePasswordRef.current.value) {
             alert("Passwords do not match.");
             return;
+        }
+        if (!emailRef.current.value.match(mailformat)) {
+            alert("Please add an email and make sure it's correct");
+            
         }
 
         
