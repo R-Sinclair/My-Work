@@ -12,10 +12,10 @@ function DonationUSide() {
   const locations = queryParams.get('location');
   const code = queryParams.get('code');
   const donationId = queryParams.get('id');
-  const [address, setAddress] = useState(locations); // Store address from URL
-  const [error, setError] = useState(null); // Error state
-  const mapRef = useRef(null); // Reference for the map container
-  const [map, setMap] = useState(null); // State to store map instance
+  const [address, setAddress] = useState(locations); 
+  const [error, setError] = useState(null); 
+  const mapRef = useRef(null); 
+  const [map, setMap] = useState(null); 
   const Uid = sessionStorage.getItem("idUser");
   const FCname = localStorage.getItem("F/Cname");
 
@@ -73,7 +73,6 @@ function DonationUSide() {
   }, [navigate]);
 
   useEffect(() => {
-    // Fetch the address if it exists in the URL (via Geocoding API)
     if (locations) {
       const apiKey = 'AIzaSyALTuqkqvxEDo-UAiv61dQFAIPe_5qLXvk'; // Replace with your actual API key
       const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(locations)}&key=${apiKey}`;
@@ -85,7 +84,7 @@ function DonationUSide() {
 
           if (data.status === 'OK') {
             const location = data.results[0].geometry.location;
-            setError(null); // Clear error
+            setError(null); 
             initMap(location); // Initialize the map with the location
           } else {
             setError('Address not found or invalid.');
@@ -126,7 +125,7 @@ function DonationUSide() {
     document.head.appendChild(script);
 
     return () => {
-      document.head.removeChild(script); // Cleanup script when the component is unmounted
+      document.head.removeChild(script); 
     };
   }, []);
 

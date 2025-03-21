@@ -124,7 +124,6 @@ function Maps ()  {
                         ) : (
                           <Layout />
                         )}
-            {/* Controls for Searching and Filtering */}
             <div id="controls" style={{ textAlign: 'center', marginBottom: '20px' }}>
                 <input type="text" id="searchBox" placeholder="Search for a location..." style={{ padding: '10px', margin: '10px', width: '250px', fontSize: '16px', borderRadius: '5px', border: '1px solid #888' }} />
                 <select id="categoryFilter" style={{ padding: '10px', margin: '10px', width: '250px', fontSize: '16px', borderRadius: '5px', border: '1px solid #888' }}>
@@ -142,7 +141,7 @@ function Maps ()  {
                 </button>
             </div>
 
-            {/* Map Container */}
+       
             <div id="map" style={{ height: '500px', width: '100%', borderRadius: '10px', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', margin: '20px auto', maxWidth: '1000px' }}></div>
         </div>
     );

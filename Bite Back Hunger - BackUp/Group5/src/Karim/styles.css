@@ -1,15 +1,13 @@
-/* General page styling */
 body {
-    background: linear-gradient(to bottom, #c8e6c9, #ffffff); /* Light green gradient */
+    background: linear-gradient(to bottom, #c8e6c9, #ffffff); 
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     text-align: center;
 }
 
-/* Style the map container */
 #map {
-    height: 500px; /* Larger map for better visibility */
+    height: 500px;
     width: 90%;
     max-width: 1000px;
     margin: 20px auto;
@@ -18,9 +16,8 @@ body {
     box-shadow: 0px 4px 10px rgba(0, 100, 0, 0.3);
 }
 
-/* Controls container */
 #controls {
-    background: #e8f5e9; /* Light green background */
+    background: #e8f5e9; 
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 100, 0, 0.3);
@@ -33,10 +30,9 @@ body {
     max-width: 800px;
 }
 
-/* Input and dropdown styling */
 #searchBox, #categoryFilter {
     padding: 10px;
-    border: 2px solid #2e7d32; /* Dark green border */
+    border: 2px solid #2e7d32; 
     border-radius: 5px;
     width: 220px;
     font-size: 16px;
@@ -47,13 +43,12 @@ body {
 
 #searchBox:focus, #categoryFilter:focus {
     outline: none;
-    border-color: #1b5e20; /* Darker green when focused */
+    border-color: #1b5e20; 
     box-shadow: 0px 0px 8px rgba(27, 94, 32, 0.5);
 }
 
-/* Button styling */
 button {
-    background-color: #388e3c; /* Medium green */
+    background-color: #388e3c; 
     color: white;
     border: none;
     padding: 10px 15px;
@@ -64,10 +59,9 @@ button {
 }
 
 button:hover {
-    background-color: #1b5e20; /* Darker green on hover */
+    background-color: #1b5e20; 
 }
 
-/* Make everything more readable on small screens */
 @media (max-width: 768px) {
     #controls {
         flex-direction: column;

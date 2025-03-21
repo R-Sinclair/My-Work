@@ -13,10 +13,10 @@ function DonationRSide() {
   const locations = queryParams.get('location');
   const code = queryParams.get('code');
   const donationId = queryParams.get('id');
-  const [address, setAddress] = useState(locations); // Store address from URL
-  const [error, setError] = useState(null); // Error state
-  const mapRef = useRef(null); // Reference for the map container
-  const [map, setMap] = useState(null); // State to store map instance
+  const [address, setAddress] = useState(locations); 
+  const [error, setError] = useState(null); 
+  const mapRef = useRef(null); 
+  const [map, setMap] = useState(null); 
   const FCname = localStorage.getItem("F/Cname");
 
 
@@ -48,7 +48,7 @@ function DonationRSide() {
 
           if (data.status === 'OK') {
             const location = data.results[0].geometry.location;
-            setError(null); // Clear error
+            setError(null); 
             initMap(location); // Initialize the map with the location
           } else {
             setError('Address not found or invalid.');
@@ -77,7 +77,7 @@ function DonationRSide() {
         title: address,
       });
 
-      setMap(mapInstance); // Store map instance to prevent re-initialization
+      setMap(mapInstance); 
     }
   };
 
@@ -112,7 +112,6 @@ function DonationRSide() {
         <p>No donation details available.</p>
       )}
 
-      {/* Map container */}
       <div ref={mapRef} style={{ height: '500px', width: '100%' }}></div>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
