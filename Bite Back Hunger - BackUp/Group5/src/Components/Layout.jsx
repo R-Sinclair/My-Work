@@ -24,19 +24,18 @@ export default function Layout() {
         onMouseEnter={handleMouseEnter} 
         onMouseLeave={handleMouseLeave} 
       >
-        <a href="/Home" style={styles.dropbtn}>Support Us</a>
+        <a href="/#" style={styles.dropbtn}>Support Us</a>
         
         {isDropdownOpen && (
           <div style={styles.dropdownContent}>
-            <a href="/Home/#donate-food" style={styles.dropdownItem}>Donate Food</a>
-            <a href="/Home/#donate-money" style={styles.dropdownItem}>Donate Money</a>
+            <a href="/#donate-food" style={styles.dropdownItem}>Donate Food</a>
+            <a href="/#donate-money" style={styles.dropdownItem}>Donate Money</a>
           </div>
         )}
       </div>
        <Link to='/AboutUs' style={styles.navLink}>About Us</Link>
       <Link to='/Charities' style={styles.navLink}>Charities/Foodbanks</Link>
       <a href="#find-shelters" style={styles.navLink}>Find Shelters</a>
-      <input type="text" style={styles.searchBar} placeholder="Search..." />
     </div>
   );
 }
