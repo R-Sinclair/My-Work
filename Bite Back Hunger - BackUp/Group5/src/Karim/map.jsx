@@ -1,54 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState,useEffect } from 'react';
 import './styles.css';
 import UserLayout from '../Components/UserLayout';
 import RestaurantLayout from '../Components/RestaurantLayout';
 import Layout from '../Components/Layout';
 
-function Maps() {
-    const [signInUser, setSignInUser] = useState("");
-    const [signInRestaurant, setSignInRestaurant] = useState("");
-    const [locations, setLocations] = useState([]); // State to store locations data
-    const [markers, setMarkers] = useState([]); // State to store map markers
-    const [mapInstance, setMapInstance] = useState(null); // Store the Google Map instance
-
-    const fetchSignedInUser = () => {
-        const UI = sessionStorage.getItem("userEmail");
-        setSignInUser(UI);
-    };
-
-    const fetchSignedInRestaurant = () => {
-        const RI = sessionStorage.getItem("restaurantEmail");
-        setSignInRestaurant(RI);
-    };
-
-    useEffect(() => {
-        fetchSignedInUser();
-        fetchSignedInRestaurant();
-    }, []);
-
-    useEffect(() => {
-        // Fetch locations data from the backend
-        const fetchLocations = async () => {
-            try {
-                const response = await axios.get('http://localhost:8080/locations/all');
-                console.log('API Response:', response.data); // Log the response
-                const parsedLocations = response.data.map((loc) => {
-                    const [lat, lng] = loc.location.split(',').map(Number); // Split and parse lat/lng
-                    return {
-                        ...loc,
-                        lat,
-                        lng,
-                    };
-                });
-                setLocations(parsedLocations); // Set the parsed data to the state
-            } catch (error) {
-                console.error('Error fetching locations:', error);
-            }
-        };
-
-        fetchLocations();
-    }, []);
+function Maps ()  {
+      const [signInUser, setSignInUser] = useState("");
+            const [signInRestaurant, setSignInRestaurant] = useState("");
+          
+            const fetchSignedInUser = () => {
+              const UI = sessionStorage.getItem("userEmail");
+              setSignInUser(UI);
+            };
+          
+            const fetchSignedInRestaurant = () => {
+              const RI = sessionStorage.getItem("restaurantEmail");
+              setSignInRestaurant(RI);
+            };
+          
+            useEffect(() => {
+              fetchSignedInUser();
+              fetchSignedInRestaurant();
+            }, []);
 
     useEffect(() => {
         const script = document.createElement('script');
@@ -58,62 +31,59 @@ function Maps() {
         document.body.appendChild(script);
 
         window.initMap = initMap; // Attach the initMap function to the window object
-    }, [locations]); // Re-run when locations change
+    }, []);
 
-    const initMap = () => {
-        const newMap = new google.maps.Map(document.getElementById("map"), {
-            center: { lat: 51.5074, lng: -0.1278 }, // Default center (London)
+    let map;
+    let markers = [];
+    let userLocationMarker = null;
+
+    const locations = [
+        { name: "The Trussell Trust – Food Bank", lat: 51.4531, lng: -0.9750, type: "foodbank", address: "1-2 The Triangle, Bristol, BS1 5DJ, UK", googleMapsUrl: "https://www.google.com/maps?q=51.4531,-0.9750" },
+        { name: "Hackney Food Bank", lat: 51.5484, lng: -0.0591, type: "foodbank", address: "105-107 Clarence Rd, Hackney, London E5 8EE, UK", googleMapsUrl: "https://www.google.com/maps?q=51.5484,-0.0591" },
+        { name: "Crisis Skylight Centre", lat: 51.5166, lng: -0.0711, type: "shelter", address: "66 Commercial St, London E1 6LT, UK", googleMapsUrl: "https://www.google.com/maps?q=51.5166,-0.0711" },
+        { name: "The Whitechapel Centre", lat: 51.5156, lng: -0.0676, type: "shelter", address: "211 Whitechapel Rd, London E1 1DU, UK", googleMapsUrl: "https://www.google.com/maps?q=51.5156,-0.0676" },
+        { name: "The Salvation Army", lat: 51.4970, lng: -0.0990, type: "charity", address: "101 Newington Causeway, London SE1 6BN, UK", googleMapsUrl: "https://www.google.com/maps?q=51.4970,-0.0990" },
+        { name: "London Homeless Shelter", lat: 51.4933, lng: -0.0927, type: "charity", address: "25 London Road, London SE1 6NN, UK", googleMapsUrl: "https://www.google.com/maps?q=51.4933,-0.0927" },
+        { name: "Dishoom Shoreditch", lat: 51.5267, lng: -0.0754, type: "restaurant", address: "7 Boundary St, Shoreditch, London E2 7JE, UK", googleMapsUrl: "https://www.google.com/maps?q=51.5267,-0.0754" },
+        { name: "The Ledbury", lat: 51.5125, lng: -0.1992, type: "restaurant", address: "127 Ledbury Rd, Notting Hill, London W11 2AQ, UK", googleMapsUrl: "https://www.google.com/maps?q=51.5125,-0.1992" }
+    ];
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: 51.5074, lng: -0.1278 },
             zoom: 12,
             zoomControl: true,
             streetViewControl: false,
-            mapTypeControl: true,
+            mapTypeControl: true
         });
 
-        setMapInstance(newMap); // Store the map instance
-
-        // Add markers to the map
-        const newMarkers = locations.map((location) => {
+        locations.forEach((location) => {
             const marker = new google.maps.Marker({
                 position: { lat: location.lat, lng: location.lng },
-                map: newMap, // Use newMap instead of map
-                title: location.name, // Use name for the marker title
+                map: map,
+                title: location.name,
                 type: location.type,
-                icon: {
-                    url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // Red dot marker
-                },
             });
 
-            // Add info window
             const infoWindow = new google.maps.InfoWindow({
-                content: `
-                    <div class="info-window-content">
-                        <strong>${location.name}</strong><br>
-                        Type: ${location.type}<br>
-                        <a href="https://www.google.com/maps?q=${location.lat},${location.lng}" target="_blank" style="color: blue; text-decoration: underline;">
-                            Get Directions
-                        </a>
-                    </div>
-                `,
+                content: `<div class="info-window-content"><strong>${location.name}</strong><br>Address: ${location.address}<br><a href="${location.googleMapsUrl}" target="_blank">Get Directions</a></div>`,
             });
 
             marker.addListener("click", () => {
-                infoWindow.open(newMap, marker);
+                infoWindow.open(map, marker);
             });
 
-            return marker;
+            markers.push(marker);
         });
-
-        setMarkers(newMarkers); // Save markers to state
-    };
+    }
 
     const filterMarkers = () => {
         const selectedCategory = document.getElementById("categoryFilter").value;
-
         markers.forEach(marker => {
             if (selectedCategory === "all" || marker.type === selectedCategory) {
-                marker.setMap(mapInstance); // Use mapInstance
+                marker.setMap(map);
             } else {
-                marker.setMap(null); // Hide the marker
+                marker.setMap(null);
             }
         });
     };
@@ -125,14 +95,18 @@ function Maps() {
                 const userLng = position.coords.longitude;
                 const userLocation = new google.maps.LatLng(userLat, userLng);
 
-                const userLocationMarker = new google.maps.Marker({
+                if (userLocationMarker) {
+                    userLocationMarker.setMap(null);
+                }
+
+                userLocationMarker = new google.maps.Marker({
                     position: userLocation,
-                    map: mapInstance, // Use mapInstance
+                    map: map,
                     title: "Your Location",
                 });
 
-                mapInstance.setCenter(userLocation);
-                mapInstance.setZoom(14);
+                map.setCenter(userLocation);
+                map.setZoom(14);
             }, () => {
                 alert("Geolocation service failed.");
             });
@@ -143,14 +117,13 @@ function Maps() {
 
     return (
         <div>
-            {signInUser ? (
-                <UserLayout />
-            ) : signInRestaurant ? (
-                <RestaurantLayout />
-            ) : (
-                <Layout />
-            )}
-
+        {signInUser ? (
+                          <UserLayout />
+                        ) : signInRestaurant ? (
+                          <RestaurantLayout />
+                        ) : (
+                          <Layout />
+                        )}
             <div id="controls" style={{ textAlign: 'center', marginBottom: '20px' }}>
                 <input type="text" id="searchBox" placeholder="Search for a location..." style={{ padding: '10px', margin: '10px', width: '250px', fontSize: '16px', borderRadius: '5px', border: '1px solid #888' }} />
                 <select id="categoryFilter" style={{ padding: '10px', margin: '10px', width: '250px', fontSize: '16px', borderRadius: '5px', border: '1px solid #888' }}>
@@ -168,32 +141,10 @@ function Maps() {
                 </button>
             </div>
 
+       
             <div id="map" style={{ height: '500px', width: '100%', borderRadius: '10px', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', margin: '20px auto', maxWidth: '1000px' }}></div>
-
-            {/* Table to display locations */}
-            <div style={{ margin: '20px auto', maxWidth: '1000px' }}>
-                <h2>Locations Table</h2>
-                <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-                    <thead>
-                        <tr>
-                            <th style={{ border: '1px solid #ddd', padding: '8px' }}>Name</th>
-                            <th style={{ border: '1px solid #ddd', padding: '8px' }}>Type</th>
-                            <th style={{ border: '1px solid #ddd', padding: '8px' }}>Coordinates</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {locations.map((location, index) => (
-                            <tr key={index}>
-                                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{location.name}</td>
-                                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{location.type}</td>
-                                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{location.lat}, {location.lng}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
         </div>
     );
-}
+};
 
 export default Maps;

@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import Layout from "../../Components/Layout";
-import { toast } from "react-toastify";
 
 function LoginPage() {
     const emailRef = useRef();
@@ -12,61 +11,60 @@ function LoginPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Security: Input validation to prevent empty credentials
         if (!emailRef.current.value || !passwordRef.current.value) {
             alert("Both fields are required.");
             return;
         }
 
         try {
-            // Security: Normal user authentication attempt
-            const loginData = {
-                email: emailRef.current.value,
-                password: passwordRef.current.value
-            };
+           
+            localStorage.clear(); 
 
-            const response = await axios.post('http://localhost:8080/NormalUsers/findByEmail', loginData);
             
-            if (response.status === 200 && response.data === "Login Successful!") {
-                // Security: Store user credentials in session storage
-                toast.success("Successful login as Normal User");
-                const userResponse = await axios.get(`http://localhost:8080/NormalUsers/findByEmail/${emailRef.current.value}`);
-                const userData = userResponse.data;
-                sessionStorage.setItem("idUser", userData.id);
+            const emailCheckUser = await axios.get(`http://localhost:8080/NormalUsers/findByEmail/${emailRef.current.value}`);
+
+            const responseUser = emailCheckUser.data;
+            const passwordUser = responseUser.password;
+            const userType = responseUser.userType;
+            const idUser = responseUser.id;
+
+            if (emailCheckUser.status === 200 && passwordUser === passwordRef.current.value && userType === 'USER') {
+                alert("Successful login as Normal User");
+
+                
+                sessionStorage.setItem("idUser",idUser);
                 sessionStorage.setItem("userEmail", emailRef.current.value);
-                setTimeout(() => navigate("/SignInHome"), 1500);
+
+                navigate('/SignInHome');
                 return;
             }
         } catch (error) {
-            // Security: Handle authentication failure for normal user
-            console.log("Normal User login failed: ", error);
+            console.log("Normal User login failed: ", error); 
         }
 
         try {
-            // Security: Restaurant user authentication attempt
-            const loginData = {
-                email: emailRef.current.value,
-                password: passwordRef.current.value
-            };
+          
+            const emailCheckRestaurant = await axios.get(`http://localhost:8080/Restaurant/email/${emailRef.current.value}`);
 
-            const response = await axios.post('http://localhost:8080/Restaurant/findByEmail', loginData);
-            
-            if (response.status === 200 && response.data === "Login Successful!") {
-                // Security: Store restaurant credentials in session storage
-                toast.success("Successful login as Restaurant User");
-                const restaurantResponse = await axios.get(`http://localhost:8080/Restaurant/email/${emailRef.current.value}`);
-                const restaurantData = restaurantResponse.data;
-                sessionStorage.setItem("restaurantId", restaurantData.id);
+            const responseRestaurant = emailCheckRestaurant.data;
+            const passwordRestaurant = responseRestaurant.password;
+            const userTypeRestaurant = responseRestaurant.userType;
+            const idRestaurant = responseRestaurant.id; 
+
+            if (emailCheckRestaurant.status === 200 && passwordRestaurant === passwordRef.current.value && userTypeRestaurant === 'BUSINESS') {
+                alert("Successful login as Restaurant User");
+
+               
+                sessionStorage.setItem("restaurantId", idRestaurant);
                 sessionStorage.setItem("restaurantEmail", emailRef.current.value);
-                setTimeout(() => navigate("/SignInHome"), 1500);
+                navigate('/SignInHome');
                 return;
             }
         } catch (error) {
-            // Security: Handle authentication failure for restaurant user
-            console.log("Restaurant User login failed: ", error);
+            console.log("Restaurant User login failed: ", error); 
         }
 
-        // Security: Handle invalid credentials
+       
         alert("Invalid login credentials.");
     };
 
@@ -95,11 +93,7 @@ function LoginPage() {
                             required
                             style={styles.input}
                         />
-                    </div> 
-                    <div> <a href="/reset-password-request" style={styles.forgotPassword}>
-          Forgot Password?
-        </a></div>
-
+                    </div>
                     <button type="submit" style={styles.button}>Login</button>
                 </form>
             </div>

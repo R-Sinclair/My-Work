@@ -26,7 +26,7 @@ function DonationRSide() {
         const emailData = {
             toEmail: sessionStorage.getItem("restaurantEmail"),
             subject: "Donation completed",
-            text: "Thank you for donating to "+FCname+". We hope you continue to donate and have a great day! DonationID: "+donationId,
+            text: "thank you for donating to "+FCname+" We hope you continue to donate and have a great day! DonationID: "+donationId,
           };
           axios.post('http://localhost:8080/email/send', emailData)
       alert('Donation has been delivered call the foodbank to verify successful dropoff');

@@ -1,6 +1,5 @@
 
-import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Home/Home';
 import LoginPage from './SignUp/Login/LoginPage';
@@ -17,15 +16,6 @@ import Charities from './Pages/ikhra-foodbanks';
 import AboutUs from './Pages/AboutUs';
 import ProfilePage from './Pages/ProfilePage-ikhra';
 import Maps from './Karim/map';
-import DonationList from './David/DonationList';
-import CampaignList from './David/CampaignList';
-import DonatePage from './David/Donation';
-import Donation1 from './David/Donation1';
-import Donation2 from './David/Donation2';
-import ResetPassword from './Forgot_Password/ResetPassword';
-import ResetPasswordRequest from './Forgot_Password/ResetPasswordRequest';
-import OTPVerification from './Components/OTPVerification';
-
 
 
 
@@ -57,19 +47,8 @@ import OTPVerification from './Components/OTPVerification';
           <Route path={'/Map'} element={<Maps/>}></Route>
           <Route path={'/AboutUs'} element={<AboutUs/>}></Route>
           <Route path={'/Profile'} element={<ProfilePage/>}></Route>
-            <Route path="/campaigns" element={<CampaignList/>} />
-            <Route path="/donation" element={<DonatePage/>} />
-            <Route path="/donation1" element={<Donation1/>} />
-            <Route path="/donation2" element={<Donation2/>} />
-            <Route path="/donations" element={<DonationList/>} />
-            <Route path="/reset-password" element={<ResetPassword/>} />
-            <Route path="/reset-password-request" element={<ResetPasswordRequest/>} />
-            <Route path="/otp" element={<OTPVerification/>} />
-
         </Routes>
-        <ToastContainer />
       </BrowserRouter>
-      
     )
   }
   

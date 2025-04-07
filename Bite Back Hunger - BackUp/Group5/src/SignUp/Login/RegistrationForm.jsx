@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import Layout from "../../Components/Layout";
-import { toast } from "react-toastify";
 
 
 function RegistrationForm() {
@@ -12,7 +11,7 @@ function RegistrationForm() {
     const retypePasswordRef = useRef();
     const agreeRef = useRef();
     const navigate = useNavigate();
-    const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;  // Email validation regex pattern
+    const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
  
     const [formData, setFormData] = useState({
@@ -38,111 +37,105 @@ function RegistrationForm() {
     const handleReg = async (e) => {
         e.preventDefault();
 
-        // Security: Terms of Use agreement check
+       
         if (!agreeRef.current.checked) {
             alert("You must agree to the Terms of Use and Privacy Policy.");
             return;
         }
-
-        // Security: User type validation
         if (!formData.business && !formData.user) {
             alert("You must tick at least one box.");
             return;
         }
 
-        // Security: Password matching validation
         if (passwordRef.current.value !== retypePasswordRef.current.value) {
             alert("Passwords do not match.");
             return;
         }
-
-        // Security: Email format validation
         if (!emailRef.current.value.match(mailformat)) {
-            alert("Please enter a valid email address.");
-            return;
+            alert("Please add an email and make sure it's correct");
+            
         }
 
-        // Security: Password length validation
-        if (passwordRef.current.value.length < 6) {
-            alert("Password must be at least 6 characters long.");
-            return;
-        }
+        
 
         try {
-            // Security: Business user registration with secure data handling
+
             if (formData.business && !formData.user){
                 const RestData = {
                     name: nameRef.current.value,
                     email: emailRef.current.value,
                     password: passwordRef.current.value,
-                    userType: "BUSINESS"
+                   userType: "BUSINESS"
                 };
                 
-                const RestPost = await axios.post(`http://localhost:8080/Restaurant/AddUser`, RestData);
+
                 
-                if (RestPost.status === 201) {
-                    // Security: Store user credentials in session storage
-                    const emailCheckR = await axios.get(`http://localhost:8080/Restaurant/email/${emailRef.current.value}`);
-                    const responseR = emailCheckR.data;
-                    const idRestaurant = responseR.id; 
-                    sessionStorage.setItem("restaurantId", idRestaurant);
-                    sessionStorage.setItem("restaurantEmail", emailRef.current.value);
-                    const emailData = {
-                        toEmail: sessionStorage.getItem("restaurantEmail"),
-                        subject: "Restaurant Registration complete",
-                        text: "Thank you for registering your business with us, we hope you have a great experience",
-                      };
-                       axios.post('http://localhost:8080/email/send', emailData)
-                       const E ={email: emailRef.current.value};
-                       await axios.post("http://localhost:8080/business/register", E);
-                    toast.success("OTP sent ✅ Please verify your email.");
-                        sessionStorage.setItem("pendingEmail",emailRef.current.value);
-                        sessionStorage.removeItem("otpVerified");
-                        setTimeout(() => navigate("/otp"), 1500);}
+                
+           const RestPost =  await axios.post(`http://localhost:8080/Restaurant/AddUser`, RestData);
+            
+           if (RestPost.status === 201) {
+
+            const emailCheckR = await axios.get(`http://localhost:8080/Restaurant/email/${emailRef.current.value}`);
+
+            const responseR = emailCheckR.data;
+            const idRestaurant = responseR.id; 
+
+            sessionStorage.setItem("restaurantId", idRestaurant);
+            sessionStorage.setItem("restaurantEmail", emailRef.current.value);
+            const emailData = {
+                toEmail: sessionStorage.getItem("restaurantEmail"),
+                subject: "Restaurant Registration complete",
+                text: "thank you for registering your business with us, we hope you have a great experience",
+              };
+               axios.post('http://localhost:8080/email/send', emailData)
+            alert("Registered successfully.");
+            navigate('/SignInHome');
+            
+        }
             }
 
-            // Security: Normal user registration with secure data handling
-            else if (formData.user && !formData.business) {
-                const userData = {
-                    name: nameRef.current.value,
-                    email: emailRef.current.value,
-                    password: passwordRef.current.value,
-                    userType: "USER"
-                };
+            else if (formData.user&& !formData.business)
+                {
+                    const userData = {
+                        name: nameRef.current.value,
+                        email: emailRef.current.value,
+                        password: passwordRef.current.value,
+                       userType: "USER"
+                    };
                 const UserPost = await axios.post(`http://localhost:8080/NormalUsers/AddUser`, userData);
-                
+ 
                 if (UserPost.status === 201) {
-                    // Security: Store user credentials in session storage
+
                     const emailCheckU = await axios.get(`http://localhost:8080/NormalUsers/findByEmail/${emailRef.current.value}`);
                     const responseU = emailCheckU.data;
                     const idUser = responseU.id; 
-                    sessionStorage.setItem("idUser", idUser);
+
+                    sessionStorage.setItem("idUser",idUser);
                     sessionStorage.setItem("userEmail", emailRef.current.value);
+
                     const emailData = {
                         toEmail: sessionStorage.getItem("userEmail"),
                         subject: "User Registration complete",
-                        text: "Thank you for registering an account with us, we hope you have a great experience",
+                        text: "thank you for registering an account with us, we hope you have a great experience",
                       };
                        axios.post('http://localhost:8080/email/send', emailData)
-                    const E ={email: emailRef.current.value};
-                    await axios.post("http://localhost:8080/business/register", E);
-                    toast.success("OTP sent ✅ Please verify your email.");
-                    sessionStorage.setItem("pendingEmail", emailRef.current.value);
-                    sessionStorage.removeItem("otpVerified");
-                    setTimeout(() => navigate("/otp"), 1500);
+
+                    alert("Registered successfully.");
+                    navigate('/SignInHome');
                 }
-            }
+                }
+
+        
+
+          
+
+           
         } catch (error) {
-            // Security: Enhanced error handling for security-related failures
-            console.error("Registration error:", error);
-            if (error.response) {
-                const errorMessage = error.response.data.error || "Registration failed. Please try again.";
-                alert(errorMessage);
-            } else if (error.request) {
-                alert("No response from server. Please check your connection and try again.");
-            } else {
-                alert("Error setting up the request. Please try again.");
-            }
+            console.error(error);
+            alert("There was an error with registration");
+            window.location.reload();
+                   
+        
         }
     };
 

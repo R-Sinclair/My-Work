@@ -18,7 +18,7 @@ function SignInHome() {
     const [signInUser, setSignInUser] = useState("");
     const [signInRestaurant, setSignInRestaurant] = useState("");
     const [name, setName] = useState("");
-  //register email
+  
     const fetchSignedInUser = async () => {
       const UI = sessionStorage.getItem("userEmail");
       const N = await axios.get(`http://localhost:8080/NormalUsers/findByEmail/${UI}`)

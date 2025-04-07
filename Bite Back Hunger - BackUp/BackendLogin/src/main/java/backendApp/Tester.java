@@ -7,12 +7,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
+import Tables.Completed;
+import Tables.Donation;
 import Tables.RestaurantTable;
 import Tables.UserTable;
 import repository.DonationRepo;
 import repository.RestaurantRepo;
 import repository.UserRepo;
-import services.EmailService;
+import services.emailService;
 
 
 @Component
@@ -20,7 +22,7 @@ public class Tester implements CommandLineRunner{
 	
 
     @Autowired
-    private EmailService emailService;
+    private emailService emailService;
 
     @Autowired
     private JavaMailSender mailSender;

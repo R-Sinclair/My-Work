@@ -1,28 +1,12 @@
 package DataTransferObject;
 
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 public class DataTransfer {
-    @NotBlank(message = "Name is required")
-    private String name;
+	String name;
+	String email;
+	String password;
+	String userType;
 
-		
-	@Column(nullable = false, length = 50) // Not null, max length 50
-    @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email format")
-    private String email;
-
-    @Column(nullable = false) // Not null
-    @NotBlank(message = "Password is required")
-    @Size(min = 6, message = "Password must be at least 6 characters")
-    private String password;
-
-    @Column(nullable = false, length = 20) // Not null, max length 20
-    @NotBlank(message = "User type is required")
-    private String userType;
 	
 	public DataTransfer(String name, String email, String password, String userType ) {
 		super();

@@ -34,10 +34,8 @@ export default function Layout() {
         )}
       </div>
        <Link to='/AboutUs' style={styles.navLink}>About Us</Link>
-       <Link to='/donation' style={styles.navLink}>CrowdFund</Link>
       <Link to='/Charities' style={styles.navLink}>Charities/Foodbanks</Link>
-      <a href="/#find-shelters" style={styles.navLink}>Find Shelters</a>
-
+      <a href="#find-shelters" style={styles.navLink}>Find Shelters</a>
     </div>
   );
 }
