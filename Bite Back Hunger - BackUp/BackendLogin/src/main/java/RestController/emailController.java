@@ -1,9 +1,12 @@
 package RestController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import DataTransferObject.DTOemail;
-import services.emailService;
+import services.EmailService;
 
 
 @RestController
@@ -11,7 +14,7 @@ import services.emailService;
 public class emailController {
 
     @Autowired
-    private emailService emailservice;
+    private EmailService emailservice;
 
     @PostMapping("/send")
     public String sendEmail(@RequestBody DTOemail emailRequest) {

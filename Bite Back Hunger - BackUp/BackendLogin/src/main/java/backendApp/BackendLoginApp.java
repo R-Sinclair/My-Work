@@ -1,5 +1,6 @@
 package backendApp;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -10,6 +11,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import services.LocationsService;
+
 @SpringBootApplication
 @EnableJpaAuditing
 @EntityScan("Tables")
@@ -18,13 +21,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan("RestController")
 @ComponentScan("services")
 @ComponentScan("backendapp")
+@ComponentScan("Config")
 public class BackendLoginApp {
-	
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendLoginApp.class, args);
 	}
-
+	
 @Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
@@ -38,4 +41,12 @@ public class BackendLoginApp {
 		};
 	}
 
+
+    // Add the CommandLineRunner bean here
+    @Bean
+    public CommandLineRunner run(LocationsService locationsService) {
+        return args -> {
+            locationsService.addInitialLocations();
+        };
+    }
 }

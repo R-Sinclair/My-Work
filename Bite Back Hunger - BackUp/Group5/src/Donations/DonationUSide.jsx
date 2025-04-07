@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './DonationUSide.css';
 import axios from 'axios';
 import UserLayout from '../Components/UserLayout';
+import { toast } from "react-toastify";
 
 function DonationUSide() {
   const location = useLocation();
@@ -54,11 +55,11 @@ function DonationUSide() {
         const emailData = {
             toEmail: sessionStorage.getItem("userEmail"),
             subject: "Donation completed",
-            text: "thank you for assisting the donation from "+donationName+" to "+FCname+" We hope you continue to donate or assist and have a great day! DonationID: "+donationId,
+            text: "Thank you for assisting the donation from "+donationName+" to "+FCname+". We hope you continue to donate or assist and have a great day! DonationID: "+donationId,
           };
            axios.post('http://localhost:8080/email/send', emailData)
-        alert('Donation completed');
-        navigate('/SignInHome');
+           toast.success("✅ Donation completed");
+           setTimeout(() => navigate("/SignInHome"), 1500);
 
   }
 
@@ -66,7 +67,7 @@ function DonationUSide() {
   useEffect(() => {
     const check = localStorage.getItem('move');
     if (check === 'true') {
-      alert('Donation has been delivered');
+      toast.success('Donation has been delivered');
       navigate('/SignInHome');
       localStorage.clear();
     }

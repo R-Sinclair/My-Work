@@ -1,0 +1,77 @@
+/* OtpPages.css — beautiful reset password page w/ local food charity image */
+
+.background {
+  background-image: url("/images/FoodCharityBackgrnd.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-blend-mode: lighten;
+  background-color: rgba(255, 255, 255, 0.6);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.otp-container {
+  max-width: 420px;
+  margin: 8% auto;
+  background-color: rgba(255, 255, 255, 0.92);
+  padding: 40px 30px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  backdrop-filter: blur(2px);
+}
+
+.otp-container h2 {
+  margin-bottom: 25px;
+  color: #2e7d32;
+  font-size: 24px;
+}
+
+.otp-container input[type="email"],
+.otp-container input[type="text"],
+.otp-container input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0 22px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #fdfdfd;
+}
+
+.otp-container button {
+  background-color: #388e3c;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.otp-container button:hover {
+  background-color: #2e7d32;
+}
+
+.strength {
+  font-size: 14px;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+.strength.weak {
+  color: red;
+}
+
+.strength.medium {
+  color: orange;
+}
+
+.strength.strong {
+  color: green;
+}

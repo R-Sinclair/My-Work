@@ -6,53 +6,53 @@ import java.util.Date;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+ 
 	@Entity
 	@Table(name = "RestaurantTable")
 	@EntityListeners(AuditingEntityListener.class)
 	public class RestaurantTable implements Serializable {
 		private static final long serialVersionUID = 1L;
-
 		@Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Long id;
-		
-		@Column
+	
+		@Column(nullable = false, length = 50) // Not null, max length 50
+		@NotBlank(message = "Name is required") // Ensures input validation
 		private String name;
-		
+	
 		@NotBlank
-		@Column(unique=true)
+		@Column(unique = true)
 		String email;
-		
-		@NotBlank
+	
+		@Column(nullable = false) // Not null
+		@NotBlank(message = "Password is required")
+		@Size(min = 6, message = "Password must be at least 6 characters")
 		String password;
-		
-
-		@Column(nullable = false)
+	
+		@Column(nullable = false, length = 20) // Not null, max length 20
+		@NotBlank(message = "User type is required")
 		String userType;
-		
+	
 		@Column(nullable = false, updatable = false)
 		@Temporal(TemporalType.TIMESTAMP)
 		@CreatedDate
 		private Date createdAt;
-
+	
 		@Column(nullable = false)
 		@Temporal(TemporalType.TIMESTAMP)
 		@LastModifiedDate
 		private Date updatedAt;
-		
 		
 		 
 

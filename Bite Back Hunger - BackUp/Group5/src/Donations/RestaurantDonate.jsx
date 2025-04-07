@@ -4,6 +4,7 @@ import RestaurantLayout from '../Components/RestaurantLayout';
 import './RestaurantDonate.css';  
 import axios from 'axios';
 import React from 'react';
+import { toast } from "react-toastify";
 
 function RestaurantDonate() {
     const donateRef = useRef();
@@ -95,9 +96,9 @@ function RestaurantDonate() {
                 
                 if (responsePost.status === 201) {
                     localStorage.setItem("F/Cname",nameRef.current.value)
-                    alert("Donation Sent.");
-                    navigate(`/DonationRSide?donationName=${name}
-                        &location=${dataToSend.location}&code=${dataToSend.code}&id=${DonationId}`);
+                    toast.success("Donation Sent.");
+                    setTimeout(() => navigate(`/DonationRSide?donationName=${name}
+                        &location=${dataToSend.location}&code=${dataToSend.code}&id=${DonationId}`), 1500);
                 }
 
             
