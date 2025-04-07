@@ -49,15 +49,16 @@ function ProfilePage() {
         }
         else if ( !emailRef.current.value.match(mailformat)) {
             alert("Please add an email and make sure it's correct");
-            
+            return;
         }
 
-        if (signInUser &&emailRef.current.value.match(mailformat)) {
+        if (signInUser && emailRef.current.value.match(mailformat)) {
             try {
                 const userRData = {
                     name: nameRef.current.value,
                     email: emailRef.current.value,
-                    password: passwordRef.current.value
+                    password: passwordRef.current.value,
+                    userType: "USER"  // Add user type for normal users
                 };
                 const NUpdate = await axios.put(`http://localhost:8080/NormalUsers/Update/${signInUser}`, userRData);
                 if (NUpdate.status === 200) {
@@ -66,14 +67,16 @@ function ProfilePage() {
                     navigate('/SignInHome');
                 }
             } catch (error) {
+                console.error('Update error:', error);
                 alert('Not able to send data to users');
             }
-        } else if (signInRestaurant&&emailRef.current.value.match(mailformat)) {
+        } else if (signInRestaurant && emailRef.current.value.match(mailformat)) {
             try {
                 const userData = {
                     name: nameRef.current.value,
                     email: emailRef.current.value,
-                    password: passwordRef.current.value
+                    password: passwordRef.current.value,
+                    userType: "BUSINESS"  // Add user type for restaurant users
                 };
                 const RUpdate = await axios.put(`http://localhost:8080/Restaurant/Update/${signInRestaurant}`, userData);
                 if (RUpdate.status === 200) {
@@ -82,10 +85,12 @@ function ProfilePage() {
                     navigate('/SignInHome');
                 }
             } catch (error) {
+                console.error('Update error:', error);
                 alert('Not able to send data to restaurant');
             }
         }
     };
+
 
     const styles = {
         container: {
@@ -156,6 +161,7 @@ function ProfilePage() {
     };
 
     return (
+
         <div>{signInUser ? (
             <UserLayout />
         ) : signInRestaurant ? (
@@ -205,6 +211,8 @@ function ProfilePage() {
             </button>
         </div>
     </div>
+
+
     );
 };
 

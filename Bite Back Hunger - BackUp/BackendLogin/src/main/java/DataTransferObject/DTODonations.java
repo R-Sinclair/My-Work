@@ -8,16 +8,18 @@ public class DTODonations {
     public Long RestaurantId;
     public int Code;
     public String Location;
+    public String pickUp;
     public Long UserId;
     public Completed completed;
     public String name;
 
-    public DTODonations(int DonationId, Long RestaurantId, int Code, String Location, Long UserId, Boolean isCompleted, String name) {
+    public DTODonations(int DonationId, Long RestaurantId, int Code, String Location,String pickUp, Long UserId, Boolean isCompleted, String name) {
         super();
         this.DonationId = DonationId;
         this.RestaurantId = RestaurantId;
         this.Code = Code;
         this.Location = Location;
+        this.pickUp = pickUp;
         this.UserId = UserId;
         this.completed = convertType(isCompleted);
         this.name = name;
@@ -70,6 +72,13 @@ public class DTODonations {
 
     public void setLocation(String Location) {
         this.Location = Location;
+    }
+    public String getPickUp() {
+        return pickUp;
+    }
+
+    public void setPickUp(String pickUp) {
+        this.pickUp = pickUp;
     }
 
   

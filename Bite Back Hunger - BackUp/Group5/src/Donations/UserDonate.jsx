@@ -63,10 +63,10 @@ export default function UserDonate() {
                                 <div key={index}>
                                     <ul>
                                         <li>
-                                            <strong>Location:</strong> {donation.location} <br />
+                                            <strong>Drop Off Location:</strong> {donation.location} <br />
                                             <strong>status:</strong> {donation.completedTask} <br />
                                             <Link
-                                              to={`/DonationUSide?donationName=${donation.name}&location=${donation.location}&code=${donation.code}&id=${donation.donationId}`}
+                                              to={`/DonationUSide?donationName=${donation.name}&location=${donation.location}&pickUp=${donation.pickUp}&code=${donation.code}&id=${donation.donationId}`}
                                             >
                                               View Details
                                             </Link>

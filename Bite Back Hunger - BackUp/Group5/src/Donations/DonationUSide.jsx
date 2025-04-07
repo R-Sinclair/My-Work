@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './DonationUSide.css';
 import axios from 'axios';
 import UserLayout from '../Components/UserLayout';
+import { toast } from "react-toastify";
 
 function DonationUSide() {
   const location = useLocation();
@@ -10,6 +11,7 @@ function DonationUSide() {
   const navigate = useNavigate();
   const donationName = queryParams.get('donationName');
   const locations = queryParams.get('location');
+  const pickUp = queryParams.get('pickUp');
   const code = queryParams.get('code');
   const donationId = queryParams.get('id');
   const [address, setAddress] = useState(locations); 
@@ -29,6 +31,7 @@ function DonationUSide() {
     const RI = response.restaurantId;
     const CO = response.code;
     const LO = response.location;
+    const PU = response.pickUp
     const NA = response.name;
     
 
@@ -43,6 +46,7 @@ function DonationUSide() {
             restaurantId: RI,
             code: CO,
             location: LO,
+            pickUp:PU,
             userId: Uid,
             completedTask: 'COMPLETEDTASK',
             name: NA
@@ -54,11 +58,11 @@ function DonationUSide() {
         const emailData = {
             toEmail: sessionStorage.getItem("userEmail"),
             subject: "Donation completed",
-            text: "thank you for assisting the donation from "+donationName+" to "+FCname+" We hope you continue to donate or assist and have a great day! DonationID: "+donationId,
+            text: "Thank you for assisting the donation from "+donationName+" to "+FCname+". We hope you continue to donate or assist and have a great day! DonationID: "+donationId,
           };
            axios.post('http://localhost:8080/email/send', emailData)
-        alert('Donation completed');
-        navigate('/SignInHome');
+           toast.success("✅ Donation completed");
+           setTimeout(() => navigate("/SignInHome"), 1500);
 
   }
 
@@ -66,7 +70,7 @@ function DonationUSide() {
   useEffect(() => {
     const check = localStorage.getItem('move');
     if (check === 'true') {
-      alert('Donation has been delivered');
+      toast.success('Donation has been delivered');
       navigate('/SignInHome');
       localStorage.clear();
     }
@@ -137,10 +141,11 @@ function DonationUSide() {
           <h1>Donation Details for {donationName}</h1>
           <ul>
             <li><strong>Restaurant Name:</strong> {donationName}</li>
+            <li><strong>Restaurant Pick Up Address:</strong> {pickUp}</li>
             <li><strong>Foodbank/Charity name:</strong> {FCname}</li>
             <li><strong>DonationID:</strong> {donationId}</li>
-            <li><strong>Location:</strong> {locations}</li>
             <li><strong>Donation Code:</strong> {code}</li>
+            <li><strong>Delivery Location:</strong> {locations}</li>
           </ul>
         </div>
       ) : (

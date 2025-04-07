@@ -10,6 +10,7 @@ function DonationRSide() {
   const queryParams = new URLSearchParams(location.search);
   const navigate = useNavigate();
   const donationName = queryParams.get('donationName');
+  const pickUp = queryParams.get('pickUp');
   const locations = queryParams.get('location');
   const code = queryParams.get('code');
   const donationId = queryParams.get('id');
@@ -26,7 +27,7 @@ function DonationRSide() {
         const emailData = {
             toEmail: sessionStorage.getItem("restaurantEmail"),
             subject: "Donation completed",
-            text: "thank you for donating to "+FCname+" We hope you continue to donate and have a great day! DonationID: "+donationId,
+            text: "Thank you for donating to "+FCname+". We hope you continue to donate and have a great day! DonationID: "+donationId,
           };
           axios.post('http://localhost:8080/email/send', emailData)
       alert('Donation has been delivered call the foodbank to verify successful dropoff');
@@ -101,11 +102,12 @@ function DonationRSide() {
           <h1>Donation Details for {donationName}</h1>
           <ul>
             <li><strong>Restaurant Name:</strong> {donationName}</li>
+            <li><strong>Restaurant Pick Up Address:</strong> {pickUp}</li>
             <li><strong>Foodbank/Charity name:</strong> {FCname}</li>
             <li><strong>DonationID:</strong> {donationId}</li>
-            <li><strong>Location:</strong> {locations}</li>
             <li><strong>Donation Code:</strong> {code}</li>
-            <li>make sure to ask for the donation code before giving the order and confirm it matches the user {}</li>
+            <li><strong>Delivery Location:</strong> {locations}</li>
+            <li>make sure to ask for the <u><b>Donation Code</b></u> above before giving the order and confirm it matches the user {}</li>
           </ul>
         </div>
       ) : (

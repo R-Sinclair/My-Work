@@ -4,6 +4,7 @@ import RestaurantLayout from '../Components/RestaurantLayout';
 import './RestaurantDonate.css';  
 import axios from 'axios';
 import React from 'react';
+import { toast } from "react-toastify";
 
 function RestaurantDonate() {
     const donateRef = useRef();
@@ -12,6 +13,9 @@ function RestaurantDonate() {
     const cityRef = useRef();
     const nameRef = useRef();
     const postCodeRef = useRef();
+    const pickUpLocRef = useRef();
+    const pickUpLocCity = useRef();
+    const pickUpLocSC = useRef();
     const [isChecked, setIsChecked] = useState(false);  
     const [isSubmitted, setIsSubmitted] = useState(false);  
     const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -23,7 +27,9 @@ function RestaurantDonate() {
                     location: '',
                     city: '',
                     postCode:'',
-                    
+                    pickUp:'',
+                    pickUpCity:'',
+                    pickUpPC:'',
 
             
     });
@@ -64,6 +70,18 @@ function RestaurantDonate() {
             alert("Please add an email and make sure it's correct");
             
         }
+        else if (formData.pickUp === '') {
+            alert("Please add a location");
+        }
+       
+        else if (formData.pickUpCity === '') {
+            alert("Please add a city");
+        
+        }
+        else if (formData.pickUpPC === '') {
+            alert("Please add a post code");
+            
+        }
 
 
             try {
@@ -86,6 +104,7 @@ function RestaurantDonate() {
                     restaurantId: id,
                     code: Code,
                     location: (locationRef.current.value + " "+cityRef.current.value +" "+postCodeRef.current.value),
+                    pickUp:(pickUpLocRef.current.value +" "+pickUpLocCity.current.value+ " "+pickUpLocSC.current.value),
                     userId: null,
                     completed: 'UNCOMPLETEDTASK',
                     name: name
@@ -95,9 +114,9 @@ function RestaurantDonate() {
                 
                 if (responsePost.status === 201) {
                     localStorage.setItem("F/Cname",nameRef.current.value)
-                    alert("Donation Sent.");
-                    navigate(`/DonationRSide?donationName=${name}
-                        &location=${dataToSend.location}&code=${dataToSend.code}&id=${DonationId}`);
+                    toast.success("Donation Sent.");
+                    setTimeout(() => navigate(`/DonationRSide?donationName=${name}
+                        &location=${dataToSend.location}&pickUp=${dataToSend.pickUp}&code=${dataToSend.code}&id=${DonationId}`), 1500);
                 }
 
             
@@ -170,6 +189,44 @@ function RestaurantDonate() {
                                         required
                                         className="donate-location-input"
                                         placeholder="Enter charity/foodbank name" />
+
+<label htmlFor="Location" className="donate-location-label">Pick Up location of Your Restaurant:</label>
+                                    <input
+                                        name="location"
+                                        type="text"
+                                        id="location"
+                                        value={formData.pickUp}
+                                        onChange={(e) => setFormData({ ...formData, pickUp: e.target.value })}
+                                        ref={pickUpLocRef}
+                                        required
+                                        className="donate-location-input"
+                                        placeholder="Enter address" />
+
+
+                                         <label htmlFor="city" className="donate-location-label"></label>
+                                    <input
+                                        name="city"
+                                        type="text"
+                                        id="city"
+                                        value={formData.pickUpCity}
+                                        onChange={(e) => setFormData({ ...formData, pickUpCity: e.target.value })}
+                                        ref={pickUpLocCity}
+                                        required
+                                        className="donate-location-input"
+                                        placeholder="Enter city" />
+
+                                         <label htmlFor="postCode" className="donate-location-label"></label>
+                                    <input
+                                        name="postCode"
+                                        type= "text"
+                                        id="postCode"
+                                        value={formData.pickUpPC}
+                                        onChange={(e) => setFormData({ ...formData, pickUpPC: e.target.value })}
+                                        ref={pickUpLocSC}
+                                        required
+                                        className="donate-location-input"
+                                        placeholder="Enter post code" />
+                                        
 
 
                                     <label htmlFor="Location" className="donate-location-label">Location of foodbank/charity:</label>

@@ -1,13 +1,11 @@
 package Tables;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -16,7 +14,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -51,6 +48,10 @@ public class Donation implements Serializable {
 	@Column(name = "Location")
 	public String location;
 
+	@Column(name = "pickUp")
+	public String pickUp;
+	
+
 	@Enumerated(EnumType.STRING) 
 		@Column(nullable = false)
 		Completed completed;
@@ -75,12 +76,13 @@ public class Donation implements Serializable {
 
 		
 	 
-	 public Donation( int donationId, Long restaurantId, int code, String location, Long userId, Completed completed, String name) {
+	 public Donation( int donationId, Long restaurantId, int code, String location, String pickUp,Long userId, Completed completed, String name) {
 		super();
 		this.donationId =  donationId;
 		this.restaurantId=  restaurantId;
 		this.code = code;
         this.location = location;
+		this.pickUp = pickUp;
 		this.userId = userId;
 		this.completed = completed;
 		this.name = name;
@@ -113,6 +115,13 @@ public class Donation implements Serializable {
     public void setLocation(String location)
     {
         this.location = location;
+    }
+	public String getPickUp(){
+        return pickUp;
+    }
+    public void setPickUp(String pickUp)
+    {
+        this.pickUp = pickUp;
     }
 	
 	public Completed getCompletedTask() {
@@ -154,7 +163,7 @@ public class Donation implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Donation Table [Donation id=" + donationId + ", RestaurantID=" + restaurantId +  ", Location=" + location +", Code=" + code + ", User Id"+userId+ "Task status "+ completed+"]";
+		return "Donation Table [Donation id=" + donationId + ", RestaurantID=" + restaurantId +  ", Location=" + location +   ", Pick Up=" + pickUp +", Code=" + code + ", User Id"+userId+ "Task status "+ completed+"]";
 	}
 	
 	

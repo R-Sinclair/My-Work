@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import DataTransferObject.DTODonations;
@@ -48,7 +46,7 @@ public class DonationsController {
         }
     	
     	Donation newDonation = new Donation(data.getDonationId(),data.getRestaurantId(), data.getCode(),
-    			data.getLocation(), data.getUserId(), data.getCompletedTask(), data.getName());
+    			data.getLocation(),data.getPickUp(), data.getUserId(), data.getCompletedTask(), data.getName());
     	donationServices.addUser(newDonation);
     	return new ResponseEntity<>(Optional.ofNullable(newDonation),HttpStatus.CREATED);
 
